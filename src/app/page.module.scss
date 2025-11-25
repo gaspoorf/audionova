@@ -1,0 +1,145 @@
+@use "sass:color";
+@use '../styles/variables' as *;
+
+.container {
+  @include container;
+  @include flex-center;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(180deg, #F0FFF4 0%, #D0F0E0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundLines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  z-index: 1;
+  
+  .lightGreen {
+    display: block;
+    color: $primary-color;
+    font-weight: normal;
+  }
+  
+  .darkGreen {
+    display: block;
+    color: #003322; // Very dark green
+    font-weight: normal;
+  }
+}
+
+.description {
+  font-size: 1rem;
+  margin-bottom: 4rem;
+  color: #003322;
+  line-height: 1.4;
+  max-width: 280px;
+  z-index: 1;
+}
+
+.buttonWrapper {
+  position: relative;
+  z-index: 1;
+  
+  // Glow effect behind the button
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    background-color: $primary-color;
+    border-radius: 50%;
+    filter: blur(30px);
+    opacity: 0.6;
+    z-index: -1;
+  }
+}
+
+.button {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: white;
+  color: #003322;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: normal;
+  cursor: pointer;
+  @include flex-center;
+  flex-direction: column;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+  text-align: center;
+  line-height: 1.2;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.instructionList {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 4rem;
+  z-index: 1;
+  width: 100%;
+  max-width: 320px;
+  padding: 0 20px;
+}
+
+.instructionItem {
+  display: flex;
+  align-items: flex-start; // Align top in case of multi-line text
+  gap: 20px;
+  text-align: left;
+  
+  p {
+    margin: 0;
+    color: #003322;
+    font-size: 1rem;
+    line-height: 1.4;
+    flex: 1;
+  }
+}
+
+.iconWrapper {
+  color: #003322; // Dark green for icons
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  margin-top: 2px; // Optical alignment with text
+  
+  svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 1.2;
+  }
+}
+

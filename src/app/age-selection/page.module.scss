@@ -1,0 +1,65 @@
+@use "sass:color";
+@use '../../styles/variables' as *;
+
+.container {
+  @include container;
+  @include flex-center;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E0F8EB 100%);
+}
+
+.label {
+  font-size: 0.8rem;
+  color: $text-light; // or a dark grey
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 2rem;
+  color: #003322;
+  margin-bottom: 3rem;
+  max-width: 300px;
+  line-height: 1.2;
+  font-weight: normal;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.button {
+  padding: 15px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  border: 1px solid #003322;
+  color: #003322;
+  font-weight: normal;
+
+  &:hover {
+    background-color: rgba(0, 51, 34, 0.05);
+  }
+
+  &.primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 154, 101, 0.3);
+
+    &:hover {
+      background-color: color.adjust($primary-color, $lightness: -5%);
+    }
+  }
+}

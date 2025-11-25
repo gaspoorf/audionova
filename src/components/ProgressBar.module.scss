@@ -1,0 +1,31 @@
+@use '../styles/variables' as *;
+
+.container {
+  @include flex-center;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: $text-light;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bars {
+  display: flex;
+  gap: 5px;
+}
+
+.bar {
+  width: 30px;
+  height: 3px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+
+  &.active {
+    background-color: $primary-color;
+  }
+}

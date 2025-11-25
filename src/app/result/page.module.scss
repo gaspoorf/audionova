@@ -1,0 +1,233 @@
+@use "sass:color";
+@use '../../styles/variables' as *;
+
+.container {
+  @include container;
+  @include flex-center;
+  flex-direction: column;
+  height: auto; // Allow scrolling
+  min-height: 100vh;
+  text-align: center;
+  background: radial-gradient(circle at 50% 20%, rgba(0, 150, 94, 0.15) 0%, rgba(255, 255, 255, 0) 50%);
+  padding-bottom: 40px;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: $text-color;
+  font-weight: normal;
+  line-height: 1.2;
+  max-width: 280px;
+  
+  span {
+    color: $primary-color;
+    font-weight: bold;
+  }
+}
+
+.resultGraph {
+  margin-bottom: 3rem;
+  width: 100%;
+  max-width: 300px;
+  position: relative;
+}
+
+.graphLabel {
+  font-size: 0.7rem;
+  color: $text-light;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.dashesContainer {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dash {
+  width: 40px;
+  height: 4px;
+  background-color: #1D1D1B; // Dark grey/black for inactive
+  border-radius: 2px;
+
+  &.active {
+    background-color: #66FF99; // Bright green for active result
+    height: 6px; // Slightly thicker
+    box-shadow: 0 0 10px rgba(102, 255, 153, 0.5);
+  }
+}
+
+.averageMarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+  
+  &::before {
+    content: '';
+    width: 1px;
+    height: 15px;
+    background-color: $text-light;
+    margin-bottom: 5px;
+  }
+  
+  span {
+    font-size: 0.7rem;
+    color: $text-light;
+    text-transform: uppercase;
+  }
+}
+
+.button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 154, 101, 0.3);
+  width: 100%;
+  max-width: 280px;
+  margin-bottom: 15px;
+  
+  &:hover {
+    background-color: color.adjust($primary-color, $lightness: -5%);
+  }
+}
+
+.inviteLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: $text-color;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 3rem;
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.productCard {
+  background-color: #134A2F; // Dark green card
+  border-radius: 20px;
+  padding: 30px 20px;
+  color: white;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 3rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.productLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.productTitle {
+  font-size: 1.4rem;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.productImage {
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,0.1); // Placeholder
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  position: relative;
+  
+  // Simulate the green ring around product
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 1px solid #66FF99;
+    border-radius: 50%;
+    transform: rotate(-15deg) scaleY(0.4);
+  }
+}
+
+.productButton {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: white;
+    color: #134A2F;
+  }
+}
+
+.contactSection {
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  padding: 30px;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+  margin-top: auto; // Push to bottom if space allows
+}
+
+.contactLabel {
+  font-size: 0.7rem;
+  color: $primary-color;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.contactTitle {
+  font-size: 1.8rem;
+  color: #134A2F;
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #134A2F;
+    font-size: 1rem;
+    text-decoration: underline;
+    font-weight: bold;
+    
+    svg {
+      color: $primary-color;
+    }
+  }
+}
+
+
