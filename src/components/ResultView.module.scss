@@ -71,28 +71,16 @@
 
 .spotlight {
   position: absolute;
-  bottom: 25px;
+  bottom: 29px;
   left: 50%;
-  width: 0;
-  height: 0;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  border-bottom: 100px solid $color-highlight-green-30; // Semi-transparent green cone
+  width: 50px;
+  height: 105px;
+  background: linear-gradient(to bottom, rgba($color-highlight-green, 0) 0%, rgba($color-highlight-green, 0.5) 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   transform-origin: bottom center;
   z-index: 1;
-  filter: blur(8px);
-  
-  // Add a brighter core
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -100px; // Relative to the border-bottom
-    left: -2px;
-    width: 4px;
-    height: 100px;
-    background: $color-highlight-green-60;
-    filter: blur(2px);
-  }
+  filter: blur(4px);
+  pointer-events: none;
 }
 
 .needle {
@@ -201,30 +189,40 @@
 
 .productImage {
   width: 100%;
-  height: 140px;
+  height: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   position: relative;
-  
-  // Placeholder circle/ring
-  &::before {
-    content: '';
-    width: 120px;
-    height: 120px;
-    border: 1px solid $color-highlight-green;
-    border-radius: 50%;
-    position: absolute;
-    transform: rotate(-15deg);
-  }
 }
 
 .productImg {
   object-fit: contain;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   filter: drop-shadow(0 10px 20px rgba($color-black, 0.3));
+}
+
+.ringBack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0.5;
+  width: 180px;
+  height: 100px;
+}
+
+.ringFront {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 180px;
+  height: 100px;
 }
 
 .outlineButton {
@@ -256,7 +254,7 @@
     color: $color-white;
     text-decoration: none;
     font-size: 0.9rem;
-    padding-bottom: 4px;
+    padding-bottom: 0;
     border-bottom: 1px solid $color-white;
     width: fit-content;
 
@@ -265,4 +263,50 @@
       border-color: $color-highlight-green;
     }
   }
+}
+
+.contactItem{
+  display: flex;
+  gap: 5px;
+}
+
+.articleCard {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.articleImageContainer {
+  width: 100%;
+  height: 200px;
+  padding: 12px;
+  padding-bottom: 0;
+  overflow: hidden;
+
+  .articleImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+}
+
+
+
+.articleContent {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.articleDescription {
+  font-size: 16px;
+  color: $color-white;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  font-weight: 300;
 }

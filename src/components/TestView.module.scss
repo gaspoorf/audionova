@@ -235,11 +235,6 @@
   z-index: 100;
   padding-bottom: 4px;
   border-bottom: 1px solid $color-white;
-
-  &::before {
-    content: '←';
-    font-size: 1.2rem;
-  }
 }
 
 .stepIndicator {

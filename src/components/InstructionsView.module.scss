@@ -38,16 +38,17 @@
   
   p {
     font-family: var(--font-lausanne);
-    font-size: 1.1rem;
+    font-size: 18px;
+    font-weight: 300;
     line-height: 1.4;
-    color: $color-white;
+    color: $color-cream;
     flex: 1;
   }
 }
 
 .iconWrapper {
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,10 +133,10 @@
 .instructionList {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 1rem;
   margin-bottom: 2rem;
   z-index: 1;
-  width: 100%;
+  width: fit-content;
   max-width: 320px;
   padding: 0 20px;
 }

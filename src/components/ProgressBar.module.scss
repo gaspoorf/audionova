@@ -7,11 +7,11 @@
 }
 
 .label {
-  font-size: 0.8rem;
-  color: $color-white-70;
+  font-size: 14px;
+  color: $color-white;
   margin-bottom: 8px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  font-weight: 300;
 }
 
 .bars {
@@ -20,12 +20,13 @@
 }
 
 .bar {
-  width: 30px;
-  height: 3px;
-  background-color: $color-white-20;
+  width: 20px;
+  height: 2px;
+  background-color: $color-white;
   border-radius: 2px;
+  opacity: 0.3;
 
   &.active {
-    background-color: $color-highlight-green;
+    opacity: 1;
   }
 }

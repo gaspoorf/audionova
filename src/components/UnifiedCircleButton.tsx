@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Image from 'next/image';
 import styles from './UnifiedCircleButton.module.scss';
 
 export type CircleVariant = 'default' | 'countdown' | 'testing' | 'success' | 'hidden';
@@ -75,7 +76,14 @@ export default function UnifiedCircleButton({
 
         {/* Content for Success Mode */}
         {variant === 'success' && (
-          <div className={styles.successIcon}>✓</div>
+          <div className={styles.successIcon}>
+            <Image 
+                src="/icons/icon-check.svg" 
+                alt="icon-validation" 
+                width={41} 
+                height={37} 
+            />
+          </div>
         )}
       </button>
     </div>

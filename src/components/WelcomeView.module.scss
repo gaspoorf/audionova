@@ -25,29 +25,22 @@
   font-family: var(--font-lausanne);
   font-size: 3rem;
   margin-bottom: 1.5rem;
-  line-height: 1.1;
-  font-weight: 400;
+  line-height: 43.2px;
+  font-weight: 350;
   color: $color-spring-green;
 }
 
 .description {
   font-family: var(--font-lausanne);
-  font-size: 1rem;
+  font-size: 18px;
   line-height: 1.5;
   margin-bottom: 3rem;
-  color: $color-white-90;
+  color: $color-cream;
   max-width: 280px;
-  
+  font-weight: 300;
   strong {
-    font-weight: 600;
+    font-weight: 500;
   }
-}
-
-.ctaText {
-  font-family: var(--font-lausanne);
-  font-size: 1.2rem;
-  color: $color-highlight-green;
-  font-weight: 500;
 }
 
 // Fallback button styles if buttonless is false (shouldn't happen in main flow)
@@ -55,26 +48,13 @@
   margin-top: auto;
   margin-bottom: 40px;
 }
-
-.description {
-  font-size: 1.1rem;
-  margin-bottom: 4rem;
-  color: $color-white;
-  line-height: 1.5;
-  max-width: 300px;
-  z-index: 1;
-  
-  strong {
-    font-weight: bold;
-  }
-}
-
 .ctaText {
-  font-size: 1.5rem;
-  color: $color-highlight-green;
+  font-family: var(--font-lausanne);
+  font-size: 24px;
+  color: $color-spring-green;
+  font-weight: 350;
   margin-bottom: 2rem;
   z-index: 1;
-  font-weight: normal;
 }
 
 .buttonWrapper {

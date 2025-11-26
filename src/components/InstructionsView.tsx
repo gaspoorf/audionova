@@ -20,8 +20,8 @@ export default function InstructionsView({ onReady, buttonless }: InstructionsVi
             <Image 
               src="/icons/quiet-place.svg" 
               alt="Quiet place" 
-              width={48} 
-              height={48} 
+              width={24} 
+              height={24} 
             />
           </div>
           <p>Find a quiet place</p>
@@ -31,8 +31,8 @@ export default function InstructionsView({ onReady, buttonless }: InstructionsVi
             <Image 
               src="/icons/headphones.svg" 
               alt="Headphones" 
-              width={48} 
-              height={48} 
+              width={24} 
+              height={24} 
             />
           </div>
           <p>Use headphones</p>
@@ -42,8 +42,8 @@ export default function InstructionsView({ onReady, buttonless }: InstructionsVi
             <Image 
               src="/icons/volume.svg" 
               alt="Volume" 
-              width={48} 
-              height={48} 
+              width={24} 
+              height={24} 
             />
           </div>
           <p>Set your device volume<br />to 100%</p>

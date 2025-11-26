@@ -48,7 +48,7 @@ export default function Home() {
   const handleAgeBack = () => setView('test-music');
   const handleAgeSelection = () => setView('result');
 
-    // Determine Circle Button State
+  // Determine Circle Button State
   let circleVariant: CircleVariant = 'hidden';
   let circleLabel: React.ReactNode = '';
   let circleOnClick: (() => void) | undefined = undefined;
@@ -95,7 +95,7 @@ export default function Home() {
       </div>
 
       {/* Persistent Circle Button */}
-      <div className={`${styles.circleContainer} ${view.startsWith('test-') ? styles.center : styles.bottom}`}>
+      <div className={`${styles.circleContainer} ${styles.bottom}`}>
         <UnifiedCircleButton 
           variant={circleVariant}
           label={circleLabel}
@@ -130,6 +130,8 @@ export default function Home() {
         
         {view === 'result' && <ResultView />}
       </div>
+
+      <a href="#" className={styles.legalLink}>LEGAL</a>
     </div>
   );
 }
