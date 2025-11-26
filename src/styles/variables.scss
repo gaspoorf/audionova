@@ -1,10 +1,58 @@
-$primary-color: #00965E; // AudioNova Green
-$secondary-color: #f5f5f5;
-$text-color: #1D1D1B;
-$text-light: #575756;
-$background-color: #fff;
-$success-color: #00965E;
-$font-family: 'Inter', sans-serif;
+// Primary Colors
+$color-audionova-green: #2ADD53;
+$color-dark-green: #093E18;
+
+// Secondary Colors
+$color-moss-green: #008052;
+$color-light-green: #98FE94;
+$color-tea-green: #EEFEDB;
+$color-white: #FFFFFF;
+
+// Digital Only
+$color-spring-green: #5EF480;
+$color-forest-green: #104B25;
+$color-cream: #FEFCF3;
+
+// Legacy/Functional Mappings
+$color-black: #000000;
+
+// Functional Aliases
+$color-highlight-green: $color-spring-green; // Using Spring Green for highlights
+$color-dark-green-gradient-start: $color-moss-green;
+$color-dark-green-gradient-end: $color-dark-green;
+
+// Transparencies - White
+$color-white-03: rgba($color-white, 0.03);
+$color-white-05: rgba($color-white, 0.05);
+$color-white-10: rgba($color-white, 0.1);
+$color-white-20: rgba($color-white, 0.2);
+$color-white-40: rgba($color-white, 0.4);
+$color-white-50: rgba($color-white, 0.5);
+$color-white-70: rgba($color-white, 0.7);
+$color-white-90: rgba($color-white, 0.9);
+
+// Transparencies - Highlight Green
+$color-highlight-green-10: rgba($color-highlight-green, 0.1);
+$color-highlight-green-20: rgba($color-highlight-green, 0.2);
+$color-highlight-green-30: rgba($color-highlight-green, 0.3);
+$color-highlight-green-40: rgba($color-highlight-green, 0.4);
+$color-highlight-green-50: rgba($color-highlight-green, 0.5);
+$color-highlight-green-60: rgba($color-highlight-green, 0.6);
+$color-highlight-green-80: rgba($color-highlight-green, 0.8);
+
+// Transparencies - Dark Green
+$color-dark-green-30: rgba($color-dark-green, 0.3);
+$color-dark-green-40: rgba($color-dark-green, 0.4);
+
+// Semantic Variables
+$primary-color: $color-audionova-green;
+$secondary-color: $color-cream;
+$text-color: $color-white;
+$text-light: #E0E0E0;
+$background-color: $color-dark-green;
+$background-gradient: radial-gradient(circle at center, $color-dark-green-gradient-start 0%, $color-dark-green-gradient-end 100%);
+$success-color: $color-highlight-green;
+$font-family: var(--font-lausanne), sans-serif;
 
 @mixin flex-center {
   display: flex;
@@ -15,18 +63,15 @@ $font-family: 'Inter', sans-serif;
 @mixin container {
   max-width: 480px; // Mobile focus
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px;
   width: 100%;
   min-height: 100vh;
   position: relative;
   
-  @media (min-width: 768px) {
-    max-width: 600px;
-    padding: 40px;
-    border-left: 1px solid #eee;
-    border-right: 1px solid #eee;
-    box-shadow: 0 0 20px rgba(0,0,0,0.05);
-  }
+  // @media (min-width: 768px) {
+  //   max-width: 600px;
+  //   padding: 40px;
+  // }
 }
 
 @mixin circle-button {
@@ -34,8 +79,8 @@ $font-family: 'Inter', sans-serif;
   height: 200px;
   border-radius: 50%;
   border: none;
-  background: white;
-  box-shadow: 0 10px 30px rgba(0, 150, 94, 0.2); // Green shadow
+  background: $color-white;
+  box-shadow: 0 10px 30px rgba($color-audionova-green, 0.2); // Green shadow
   cursor: pointer;
   @include flex-center;
   flex-direction: column;

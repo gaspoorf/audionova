@@ -1,93 +1,136 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './page.module.scss';
-import Header from '@/components/Header';
+import WelcomeView from '@/components/WelcomeView';
+import InstructionsView from '@/components/InstructionsView';
+import TestView from '@/components/TestView';
+import AgeSelectionView from '@/components/AgeSelectionView';
+import ResultView from '@/components/ResultView';
+import UnifiedCircleButton, { CircleVariant } from '@/components/UnifiedCircleButton';
+import { useTestLogic } from '@/hooks/useTestLogic';
+import styles from './page.module.scss'; // We'll create this
+
+type ViewState = 
+  | 'welcome' 
+  | 'instructions' 
+  | 'test-restaurant' 
+  | 'test-street' 
+  | 'test-music' 
+  | 'age-selection' 
+  | 'result';
 
 export default function Home() {
-  const [step, setStep] = useState<'welcome' | 'instructions'>('welcome');
-  const router = useRouter();
+  const [view, setView] = useState<ViewState>('welcome');
 
-  const handleStart = () => {
-    setStep('instructions');
+  // Test Logic Hook (only active when in test mode)
+  const currentTestStage = view.startsWith('test-') ? view.replace('test-', '') : 'restaurant';
+  const { status: testStatus, countdown, config: testConfig, audioRef, startTest, handleHeard } = useTestLogic(
+    currentTestStage,
+    (next) => handleTestNext(next)
+  );
+
+  const handleStart = () => setView('instructions');
+  const handleReady = () => setView('test-restaurant');
+
+  const handleTestNext = (nextStage: string) => {
+    if (nextStage === 'street') setView('test-street');
+    else if (nextStage === 'music') setView('test-music');
+    else if (nextStage === 'age-selection') setView('age-selection');
+    else if (nextStage === 'result') setView('result');
   };
 
-  const handleReady = () => {
-    router.push('/test/restaurant');
+  const handleTestBack = () => {
+    if (view === 'test-restaurant') setView('instructions');
+    else if (view === 'test-street') setView('test-restaurant');
+    else if (view === 'test-music') setView('test-street');
   };
+
+  const handleAgeBack = () => setView('test-music');
+  const handleAgeSelection = () => setView('result');
+
+    // Determine Circle Button State
+  let circleVariant: CircleVariant = 'hidden';
+  let circleLabel: React.ReactNode = '';
+  let circleOnClick: (() => void) | undefined = undefined;
+  let circleCountdown: number | undefined = undefined;
+
+  if (view === 'welcome') {
+    circleVariant = 'default';
+    circleLabel = <>Start<br />the test</>;
+    circleOnClick = handleStart;
+  } else if (view === 'instructions') {
+    circleVariant = 'default';
+    circleLabel = "I'm ready";
+    circleOnClick = handleReady;
+  } else if (view.startsWith('test-')) {
+    if (testStatus === 'intro') {
+      circleVariant = 'default';
+      circleLabel = <>Start<br />the test</>;
+      circleOnClick = startTest;
+    } else if (testStatus === 'countdown') {
+      circleVariant = 'countdown';
+      circleCountdown = countdown;
+    } else if (testStatus === 'testing') {
+      circleVariant = 'testing';
+      circleLabel = <>I heard<br />the sound</>;
+      circleOnClick = handleHeard;
+    } else if (testStatus === 'success') {
+      circleVariant = 'success';
+    }
+  }
 
   return (
-    <main className={styles.container}>
-      <div className={styles.backgroundLines}>
-        <svg viewBox="0 0 375 812" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path d="M-50 250 C 50 200, 300 200, 400 280" stroke="#009A65" strokeWidth="1" fill="none" opacity="0.5" />
-          <path d="M300 0 C 300 100, 250 250, 400 300" stroke="#009A65" strokeWidth="1" fill="none" opacity="0.5" />
-          <path d="M-100 600 C 50 700, 200 800, 400 900" stroke="#009A65" strokeWidth="1" fill="none" opacity="0.5" />
+    <div className={styles.mainLayout}>
+      {/* Background Pattern */}
+      <div className={styles.backgroundLayer}>
+        <svg viewBox="0 0 375 812" preserveAspectRatio="xMidYMid slice">
+          <circle cx="50%" cy="40%" r="100" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <circle cx="50%" cy="40%" r="180" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <circle cx="50%" cy="40%" r="280" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <circle cx="50%" cy="40%" r="400" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <circle cx="50%" cy="40%" r="550" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <path d="M-100 600 Q 187 500 475 600" stroke="rgba(255,255,255,0.03)" strokeWidth="1" fill="none" />
+          <path d="M-100 650 Q 187 550 475 650" stroke="rgba(255,255,255,0.03)" strokeWidth="1" fill="none" />
         </svg>
       </div>
 
-      <Header />
-      
-      {step === 'welcome' && (
-        <>
-          <h1 className={styles.title}>
-            <span className={styles.lightGreen}>Hearing</span>
-            <span className={styles.darkGreen}>flash test</span>
-          </h1>
-          <p className={styles.description}>
-            3 quick tests to reveal<br />your current hearing level
-          </p>
-          <div className={styles.buttonWrapper}>
-            <button className={styles.button} onClick={handleStart}>
-              Start<br />the test
-            </button>
-          </div>
-        </>
-      )}
+      {/* Persistent Circle Button */}
+      <div className={`${styles.circleContainer} ${view.startsWith('test-') ? styles.center : styles.bottom}`}>
+        <UnifiedCircleButton 
+          variant={circleVariant}
+          label={circleLabel}
+          onClick={circleOnClick}
+          countdownValue={circleCountdown}
+        />
+      </div>
 
-      {step === 'instructions' && (
-        <>
-          <h1 className={styles.title}>
-            <span className={styles.lightGreen}>Before</span>
-            <span className={styles.darkGreen}>you start</span>
-          </h1>
-          <div className={styles.instructionList}>
-            <div className={styles.instructionItem}>
-              <div className={styles.iconWrapper}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
-              <p>Prefer a quiet place</p>
-            </div>
-            <div className={styles.instructionItem}>
-              <div className={styles.iconWrapper}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                  <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                </svg>
-              </div>
-              <p>It is recommended that<br />you use earphones if you can</p>
-            </div>
-            <div className={styles.instructionItem}>
-              <div className={styles.iconWrapper}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
-              </div>
-              <p>Adjust your volume to 100%</p>
-            </div>
-          </div>
-          <div className={styles.buttonWrapper}>
-            <button className={styles.button} onClick={handleReady}>
-              Ready?
-            </button>
-          </div>
-        </>
-      )}
-    </main>
+      {/* Content Views (Buttonless) */}
+      <div className={styles.contentLayer}>
+        {view === 'welcome' && <WelcomeView buttonless />}
+        
+        {view === 'instructions' && <InstructionsView onReady={handleReady} buttonless />}
+        
+        {view.startsWith('test-') && (
+          <TestView 
+            stage={currentTestStage} 
+            status={testStatus} // Pass status from hook
+            config={testConfig} // Pass config from hook
+            audioRef={audioRef} // Pass ref from hook
+            onBack={handleTestBack} 
+            buttonless // Tell TestView not to render its own button
+          />
+        )}
+        
+        {view === 'age-selection' && (
+          <AgeSelectionView 
+            onSelect={handleAgeSelection} 
+            onBack={handleAgeBack}
+          />
+        )}
+        
+        {view === 'result' && <ResultView />}
+      </div>
+    </div>
   );
 }
+

@@ -1,0 +1,84 @@
+@use "sass:color";
+@use '../styles/variables' as *;
+
+.container {
+  @include container;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+  // background removed
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: $color-white;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.label {
+  font-size: 14px;
+  color: $color-white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  margin-top: 93px;
+  font-weight: 300;
+}
+
+.title {
+  font-size: 2rem;
+  color: $color-white;
+  margin-bottom: 4rem;
+  max-width: 320px;
+  line-height: 28.8px;
+  font-weight: 300;
+
+  strong {
+    color: $color-spring-green;
+    font-weight: 300;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: fit-content;
+  max-width: 220px;
+}
+
+.button {
+  padding: 16px 24px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  border: 1px solid $color-white;
+  color: $color-white;
+  font-weight: 500;
+
+  &:hover {
+    background-color: $color-highlight-green;
+    border-color: $color-highlight-green;
+    color: $color-dark-green;
+  }
+}

@@ -8,7 +8,7 @@
 
 .label {
   font-size: 0.8rem;
-  color: $text-light;
+  color: $color-white-70;
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -22,10 +22,10 @@
 .bar {
   width: 30px;
   height: 3px;
-  background-color: #e0e0e0;
+  background-color: $color-white-20;
   border-radius: 2px;
 
   &.active {
-    background-color: $primary-color;
+    background-color: $color-highlight-green;
   }
 }

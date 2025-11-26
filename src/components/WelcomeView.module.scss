@@ -1,0 +1,141 @@
+@use '../styles/variables' as *;
+
+.container {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  color: $color-white;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 100px; // Push up slightly to leave room for button
+}
+
+.title {
+  font-family: var(--font-lausanne);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  font-weight: 400;
+  color: $color-spring-green;
+}
+
+.description {
+  font-family: var(--font-lausanne);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 3rem;
+  color: $color-white-90;
+  max-width: 280px;
+  
+  strong {
+    font-weight: 600;
+  }
+}
+
+.ctaText {
+  font-family: var(--font-lausanne);
+  font-size: 1.2rem;
+  color: $color-highlight-green;
+  font-weight: 500;
+}
+
+// Fallback button styles if buttonless is false (shouldn't happen in main flow)
+.buttonWrapper {
+  margin-top: auto;
+  margin-bottom: 40px;
+}
+
+.description {
+  font-size: 1.1rem;
+  margin-bottom: 4rem;
+  color: $color-white;
+  line-height: 1.5;
+  max-width: 300px;
+  z-index: 1;
+  
+  strong {
+    font-weight: bold;
+  }
+}
+
+.ctaText {
+  font-size: 1.5rem;
+  color: $color-highlight-green;
+  margin-bottom: 2rem;
+  z-index: 1;
+  font-weight: normal;
+}
+
+.buttonWrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+}
+
+.button {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: $color-white;
+  border: 2px solid $color-highlight-green;
+  font-size: 1.2rem;
+  font-weight: normal;
+  cursor: pointer;
+  @include flex-center;
+  flex-direction: column;
+  transition: transform 0.2s, background-color 0.2s;
+  text-align: center;
+  line-height: 1.2;
+  z-index: 10;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: $color-highlight-green-10;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@mixin circle-ring($size, $opacity) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: 1px solid $color-highlight-green;
+  opacity: $opacity;
+  pointer-events: none;
+}
+
+.pulseCircle1 {
+  @include circle-ring(180px, 0.3);
+}
+
+.pulseCircle2 {
+  @include circle-ring(240px, 0.2);
+}
+
+.pulseCircle3 {
+  @include circle-ring(320px, 0.1);
+}
+

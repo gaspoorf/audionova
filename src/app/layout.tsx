@@ -1,15 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.scss";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const lausanne = localFont({
+  src: [
+    {
+      path: "../fonts/TWKLausanne-300.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../fonts/TWKLausanne-350.woff2",
+      weight: "350", // Using 350 as provided, often treated as Book/Regular
+      style: "normal",
+    },
+    {
+      path: "../fonts/TWKLausanne-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  variable: "--font-lausanne",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={lausanne.variable}>
         {children}
       </body>
     </html>

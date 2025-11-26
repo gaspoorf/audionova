@@ -5,27 +5,11 @@
   padding: 20px 0;
   @include flex-center;
   margin-bottom: 20px;
+  padding-top: 82px;
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-
-.logoText {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #004d33; // Darker green for text part
-}
-
-.logoIcon {
-  width: 24px;
-  height: 24px;
-  background-color: $primary-color;
-  color: white;
-  border-radius: 50%;
-  @include flex-center;
-  font-weight: bold;
-  font-size: 1rem;
 }

@@ -1,0 +1,190 @@
+@use '../styles/variables' as *;
+
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0);
+  }
+}
+
+.button {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 1px solid $color-highlight-green-50; // Thin light green border
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-dark-green-30; // Semi-transparent dark green
+  backdrop-filter: blur(4px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  overflow: hidden;
+  
+  &:disabled {
+    cursor: default;
+  }
+
+  // Variant: Default (Intro/Start)
+  &.default {
+    &:hover {
+      transform: scale(1.05);
+      background-color: $color-highlight-green-10;
+      border-color: $color-highlight-green-80;
+    }
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  // Variant: Testing (Same size as default, but different visual cues)
+  &.testing {
+    width: 200px; // Slightly larger for the test area
+    height: 200px;
+    border: 1px solid $color-highlight-green-30;
+    background: radial-gradient(circle, $color-highlight-green-10 0%, $color-dark-green-40 70%);
+    
+    &:active {
+      background-color: $color-highlight-green-20;
+      transform: scale(0.95);
+    }
+  }
+
+  // Variant: Countdown
+  &.countdown {
+    border: none;
+    background: transparent;
+    width: 180px;
+    height: 180px;
+  }
+
+  // Variant: Success
+  &.success {
+    width: 160px;
+    height: 160px;
+    background-color: $color-highlight-green-20;
+    border: 1px solid $color-highlight-green;
+    box-shadow: 0 0 40px $color-highlight-green-20;
+  }
+}
+
+.buttonText {
+  font-family: var(--font-lausanne);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: $color-white;
+  text-align: center;
+  max-width: 120px;
+  line-height: 1.2;
+  transition: opacity 0.3s;
+}
+
+// Pulse Animations
+@mixin circle-ring($size, $opacity) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: 1px solid $color-highlight-green-30;
+  opacity: $opacity;
+  pointer-events: none;
+  transition: all 0.5s;
+}
+
+.pulseCircle1 { @include circle-ring(180px, 0.3); }
+.pulseCircle2 { @include circle-ring(240px, 0.2); }
+.pulseCircle3 { @include circle-ring(320px, 0.1); }
+
+// Success Ripples
+.successRipple1 { @include circle-ring(240px, 0.2); border-color: $color-highlight-green-30; }
+.successRipple2 { @include circle-ring(340px, 0.15); border-color: $color-highlight-green-20; }
+.successRipple3 { @include circle-ring(440px, 0.1); border-color: $color-highlight-green-10; }
+
+// Countdown Styles
+.countdownContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdownSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.countdownCircleBackground {
+  fill: none;
+  stroke: $color-white-10;
+  stroke-width: 1;
+}
+
+.countdownCircleProgress {
+  fill: none;
+  stroke: $color-highlight-green;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 565; // 2 * pi * 90 (approx for r=90 if viewBox is larger, adjusting for r=48 in 100x100)
+  // r=48 -> C = 2 * pi * 48 = 301.59
+  stroke-dasharray: 301.59;
+  stroke-dashoffset: 301.59;
+  animation: fillCircle 3s linear forwards;
+}
+
+@keyframes fillCircle {
+  from { stroke-dashoffset: 301.59; }
+  to { stroke-dashoffset: 0; }
+}
+
+.countdownValue {
+  font-size: 4rem;
+  color: $color-white;
+  font-weight: 300;
+  position: relative;
+  z-index: 2;
+}
+
+// Testing Overlay Styles - Simplified for new design
+.overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.overlayText {
+  color: $color-white;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 140px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.successIcon {
+  font-size: 3rem;
+  color: $color-dark-green;
+}

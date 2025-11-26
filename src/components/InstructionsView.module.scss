@@ -1,0 +1,170 @@
+@use '../styles/variables' as *;
+
+.container {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  color: $color-white;
+}
+
+.title {
+  font-family: var(--font-lausanne);
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  line-height: 28.8px;
+  font-weight: 300;
+  color: $color-spring-green;
+}
+
+.instructionList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 4rem;
+}
+
+.instructionItem {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: left;
+  
+  p {
+    font-family: var(--font-lausanne);
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: $color-white;
+    flex: 1;
+  }
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-highlight-green;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.buttonWrapper {
+  margin-top: auto;
+  margin-bottom: 40px;
+}
+
+.buttonWrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin-top: auto;
+  margin-bottom: 40px;
+}
+
+.button {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: $color-white;
+  border: 2px solid $color-highlight-green;
+  font-size: 1.2rem;
+  font-weight: normal;
+  cursor: pointer;
+  @include flex-center;
+  flex-direction: column;
+  transition: transform 0.2s, background-color 0.2s;
+  text-align: center;
+  line-height: 1.2;
+  z-index: 10;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: $color-highlight-green-10;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@mixin circle-ring($size, $opacity) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: 1px solid $color-highlight-green;
+  opacity: $opacity;
+  pointer-events: none;
+}
+
+.pulseCircle1 {
+  @include circle-ring(180px, 0.3);
+}
+
+.pulseCircle2 {
+  @include circle-ring(240px, 0.2);
+}
+
+.pulseCircle3 {
+  @include circle-ring(320px, 0.1);
+}
+
+.instructionList {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 2rem;
+  z-index: 1;
+  width: 100%;
+  max-width: 320px;
+  padding: 0 20px;
+}
+
+.instructionItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+  
+  p {
+    margin: 0;
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    flex: 1;
+  }
+}
+
+.iconWrapper {
+  color: $color-highlight-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  
+  svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 1.2;
+  }
+}
