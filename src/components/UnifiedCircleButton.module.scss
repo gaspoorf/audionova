@@ -53,7 +53,8 @@
   &.testing {
     width: 240px; // Larger to match screenshot
     height: 240px;
-    filter: drop-shadow(0 0 30px #72FF87) drop-shadow(0 4px 100px #72FF87) drop-shadow(0 4px 250px rgba(114, 255, 135, 0.20));
+    // Replaced filter drop-shadow with box-shadow to fix Safari clipping issue with overflow: hidden
+    box-shadow: 0 0 30px #72FF87, 0 4px 100px #72FF87, 0 4px 250px rgba(114, 255, 135, 0.20);
     background: radial-gradient(circle, $color-highlight-green-10 0%, $color-dark-green-40 70%);
     
     &:active {
@@ -93,7 +94,8 @@
   &.countdown {
     border: none;
     background: $color-moss-green;
-    filter: drop-shadow(0 0 50px rgba(114, 255, 135, 0.70));
+    // Replaced filter drop-shadow with box-shadow
+    box-shadow: 0 0 50px rgba(114, 255, 135, 0.70);
     width: 180px;
     height: 180px;
     padding: 15px;
@@ -105,9 +107,10 @@
     height: 120px;
     background-color: $color-spring-green;
     border: 1px solid $color-highlight-green;
-    box-shadow: 0 0 40px $color-highlight-green-20; 
+    // Combined existing box-shadow with converted drop-shadows
+    box-shadow: 0 0 40px $color-highlight-green-20, 0 0 30px #72FF87, 0 4px 100px #72FF87;
     stroke: #5EF480;
-    filter: drop-shadow(0 0 30px #72FF87) drop-shadow(0 4px 100px #72FF87);
+    // filter: drop-shadow(0 0 30px #72FF87) drop-shadow(0 4px 100px #72FF87);
 
   }
 }

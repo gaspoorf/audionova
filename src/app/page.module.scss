@@ -4,6 +4,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh; // Fix for mobile browsers (Safari iOS)
   background: linear-gradient(168deg, #003120 0%, #008052 100%);
 //   background: radial-gradient(circle at 50% 40%, $color-dark-green-gradient-start 0%, $color-dark-green-gradient-end 100%);
   color: $color-white;
