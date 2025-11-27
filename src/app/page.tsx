@@ -7,6 +7,7 @@ import TestView from '@/components/TestView';
 import AgeSelectionView from '@/components/AgeSelectionView';
 import ResultView from '@/components/ResultView';
 import UnifiedCircleButton, { CircleVariant } from '@/components/UnifiedCircleButton';
+import LegalModal from '@/components/LegalModal';
 import { useTestLogic } from '@/hooks/useTestLogic';
 import styles from './page.module.scss'; // We'll create this
 
@@ -21,10 +22,11 @@ type ViewState =
 
 export default function Home() {
   const [view, setView] = useState<ViewState>('welcome');
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
 
   // Test Logic Hook (only active when in test mode)
   const currentTestStage = view.startsWith('test-') ? view.replace('test-', '') : 'restaurant';
-  const { status: testStatus, countdown, config: testConfig, audioRef, startTest, handleHeard } = useTestLogic(
+  const { status: testStatus, isExitingIntro, countdown, config: testConfig, audioRef, startTest, handleHeard } = useTestLogic(
     currentTestStage,
     (next) => handleTestNext(next)
   );
@@ -53,6 +55,7 @@ export default function Home() {
   let circleLabel: React.ReactNode = '';
   let circleOnClick: (() => void) | undefined = undefined;
   let circleCountdown: number | undefined = undefined;
+  let circleBackgroundImage: string | undefined = undefined;
 
   if (view === 'welcome') {
     circleVariant = 'default';
@@ -74,6 +77,7 @@ export default function Home() {
       circleVariant = 'testing';
       circleLabel = <>I heard<br />the sound</>;
       circleOnClick = handleHeard;
+      circleBackgroundImage = `/img/sounds/${currentTestStage}.jpg`;
     } else if (testStatus === 'success') {
       circleVariant = 'success';
     }
@@ -101,6 +105,7 @@ export default function Home() {
           label={circleLabel}
           onClick={circleOnClick}
           countdownValue={circleCountdown}
+          backgroundImage={circleBackgroundImage}
         />
       </div>
 
@@ -114,6 +119,7 @@ export default function Home() {
           <TestView 
             stage={currentTestStage} 
             status={testStatus} // Pass status from hook
+            isExitingIntro={isExitingIntro}
             config={testConfig} // Pass config from hook
             audioRef={audioRef} // Pass ref from hook
             onBack={handleTestBack} 
@@ -131,7 +137,37 @@ export default function Home() {
         {view === 'result' && <ResultView />}
       </div>
 
-      <a href="#" className={styles.legalLink}>LEGAL</a>
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          {(view.startsWith('test-') || view === 'age-selection') && (
+            <button 
+              className={styles.backButton} 
+              onClick={view === 'age-selection' ? handleAgeBack : handleTestBack}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              Back
+            </button>
+          )}
+
+          <a 
+            href="#" 
+            className={styles.legalLink}
+            onClick={(e) => {
+              e.preventDefault();
+              setIsLegalOpen(true);
+            }}
+          >
+            LEGAL
+          </a>
+        </div>
+      </footer>
+
+      <LegalModal 
+        isOpen={isLegalOpen} 
+        onClose={() => setIsLegalOpen(false)} 
+      />
     </div>
   );
 }

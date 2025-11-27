@@ -8,6 +8,7 @@ const STAGES = ['restaurant', 'street', 'music'];
 interface TestViewProps {
   stage: string;
   status: 'intro' | 'countdown' | 'testing' | 'success';
+  isExitingIntro?: boolean;
   config: { title: string; description: string; next: string; keyword: string };
   audioRef: RefObject<HTMLAudioElement | null>;
   onBack: () => void;
@@ -15,7 +16,7 @@ interface TestViewProps {
   onNext?: (next: string) => void;
 }
 
-export default function TestView({ stage, status, config, audioRef, onBack, buttonless }: TestViewProps) {
+export default function TestView({ stage, status, isExitingIntro, config, audioRef, onBack, buttonless }: TestViewProps) {
   const stageIndex = STAGES.indexOf(stage) + 1;
 
   if (!config) return <div>Invalid Stage</div>;
@@ -34,24 +35,23 @@ export default function TestView({ stage, status, config, audioRef, onBack, butt
 
   return (
     <main className={styles.container}>
-      <button className={styles.topBackButton} onClick={onBack}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        Back
-      </button>
-      <Header />
-      {status !== 'success' && <ProgressBar current={stageIndex} total={3} />}
+      <Header compact />
+      <ProgressBar current={stageIndex} total={3} />
       
       <audio ref={audioRef} src={`/sounds/${stage}.mp3`} loop />
 
-      <h1 className={styles.title}>{renderTitle()}</h1>
+      <h1 key={`${stage}-title`} className={`${styles.title} animate-fade-in`}>{renderTitle()}</h1>
 
-      {(status === 'intro' || status === 'testing') && (
+      {(status === 'intro' || isExitingIntro) && (
         <>
-          <p className={styles.description}>{config.description}</p>
+          <p 
+            key={`${stage}-desc`} 
+            className={`${styles.description} ${isExitingIntro ? 'animate-fade-out' : 'animate-fade-in'}`}
+          >
+            {config.description}
+          </p>
           {!buttonless && (
-             <div className={styles.buttonWrapper}>
+             <div className={`${styles.buttonWrapper} ${isExitingIntro ? 'animate-fade-out' : 'animate-fade-in'}`}>
                <button className={styles.circleButton}>Start</button>
              </div>
           )}

@@ -9,7 +9,7 @@ interface InstructionsViewProps {
 
 export default function InstructionsView({ onReady, buttonless }: InstructionsViewProps) {
   return (
-    <main className={styles.container}>
+    <main className={`${styles.container} animate-fade-in`}>
       <Header />
       
       <h1 className={styles.title}>Before you start</h1>

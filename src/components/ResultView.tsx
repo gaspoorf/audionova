@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import styles from './ResultView.module.scss';
 import Header from '@/components/Header';
 
+gsap.registerPlugin(useGSAP);
+
 export default function ResultView() {
   const [score, setScore] = useState<number | null>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const s1 = Number(localStorage.getItem('sound1Score') || 0);
@@ -16,11 +21,9 @@ export default function ResultView() {
     setScore(finalScore);
   }, []);
 
-  if (score === null) return <div>Loading...</div>;
-
   // Map 0-100 score to 1-5 scale
   // 0-20: 1, 21-40: 2, 41-60: 3, 61-80: 4, 81-100: 5
-  const scoreLevel = Math.min(5, Math.max(1, Math.ceil(score / 20)));
+  const scoreLevel = score === null ? 1 : Math.min(5, Math.max(1, Math.ceil(score / 20)));
 
   // Title logic
   const getTitle = () => {
@@ -42,6 +45,32 @@ export default function ResultView() {
   const rotations = [-72, -36, 0, 36, 72];
   const rotation = rotations[scoreLevel - 1];
 
+  useGSAP(() => {
+    if (score === null || !spotlightRef.current) return;
+
+    // Kill any existing tweens
+    gsap.killTweensOf(spotlightRef.current);
+
+    const tl = gsap.timeline();
+
+    // Initial state
+    gsap.set(spotlightRef.current, {
+      xPercent: -50,
+      rotate: rotation, // Start from far left
+      background: 'linear-gradient(to bottom, rgba(94, 244, 128, 0) 100%, rgba(94, 244, 128, 0.5) 100%)'
+    });
+
+    // Animation sequence
+    tl.to(spotlightRef.current, {
+      background: 'linear-gradient(to bottom, rgba(94, 244, 128, 0) 0%, rgba(94, 244, 128, 0.5) 100%)',
+      duration: 1.5,
+      ease: 'power2.inOut'
+    })
+
+  }, [rotation, score]);
+
+  if (score === null) return <div>Loading...</div>;
+
   // SVG paths for each segment (from left to right)
   const segments = [
     {
@@ -50,8 +79,8 @@ export default function ResultView() {
       viewBox: "0 0 39 71",
       width: 39,
       height: 71,
-      x: 20,
-      y: 80
+      x: 28,
+      y: 78
     },
     {
       // Segment 2
@@ -59,8 +88,8 @@ export default function ResultView() {
       viewBox: "0 0 64 53",
       width: 64,
       height: 53,
-      x: 51,
-      y: 29
+      x: 54,
+      y: 33
     },
     {
       // Segment 3 (Center)
@@ -69,7 +98,7 @@ export default function ResultView() {
       width: 68,
       height: 24,
       x: 116,
-      y: 20
+      y: 25
     },
     {
       // Segment 4
@@ -77,8 +106,8 @@ export default function ResultView() {
       viewBox: "0 0 64 53",
       width: 64,
       height: 53,
-      x: 187,
-      y: 30
+      x: 182,
+      y: 33
     },
     {
       // Segment 5 (Rightmost)
@@ -86,14 +115,14 @@ export default function ResultView() {
       viewBox: "0 0 38 70",
       width: 38,
       height: 70,
-      x: 240,
-      y: 80
+      x: 233,
+      y: 78
     }
   ];
 
   return (
-    <main className={styles.container}>
-      <Header />
+    <main className={`${styles.container} animate-fade-in`}>
+      <Header compact />
       <h1 className={styles.title}>{getTitle()}</h1>
       
       <div className={styles.resultGraph}>
@@ -116,8 +145,7 @@ export default function ResultView() {
                 >
                   <path 
                     d={seg.path} 
-                    fill={isActive ? "#5EF480" : "rgba(255,255,255,0.2)"}
-                    className={isActive ? styles.activeSegmentGlow : ''}
+                    className={isActive ? styles.activeSegment : styles.inactiveSegment}
                   />
                 </svg>
               );
@@ -126,8 +154,8 @@ export default function ResultView() {
           
           {/* Needle / Spotlight */}
           <div 
+            ref={spotlightRef}
             className={styles.spotlight} 
-            style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
           />
           
           <div className={styles.resultLabel}>Your result</div>
@@ -142,10 +170,12 @@ export default function ResultView() {
       
       <button className={styles.inviteLink}>
         Invite someone to try the test
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="7" y1="17" x2="17" y2="7"></line>
-          <polyline points="7 7 17 7 17 17"></polyline>
-        </svg>
+        <Image 
+          src="/icons/arrow-top-right.svg" 
+          alt="" 
+          width={16} 
+          height={16} 
+        />
       </button>
 
       {scoreLevel < 3 ? (
@@ -161,7 +191,7 @@ export default function ResultView() {
               className={styles.ringBack}
             />
             <Image 
-              src="/img/phonak.webp" 
+              src="/img/products/phonak.webp" 
               alt="Phonak Virto™ R Infinio" 
               width={140} 
               height={140} 
@@ -203,7 +233,7 @@ export default function ResultView() {
 
       <div className={styles.card}>
         <div className={styles.cardLabel}>NEED ASSISTANCE?</div>
-        <h2 className={styles.cardTitle}>We're here for you</h2>
+        <h2 className={styles.cardTitle}>Meet our hearing care specialists</h2>
         <div className={styles.contactList}>
           <div className={styles.contactItem}>
             <Image src="/icons/location.svg" alt="" width={24} height={24} />

@@ -17,21 +17,21 @@
 }
 
 .button {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 1px solid $color-highlight-green-50; // Thin light green border
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; 
   cursor: pointer;
   position: relative;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $color-dark-green-30; // Semi-transparent dark green
+  background-color: $color-white;
   backdrop-filter: blur(4px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0;
   overflow: hidden;
+  border: none;
   
   &:disabled {
     cursor: default;
@@ -41,7 +41,7 @@
   &.default {
     &:hover {
       transform: scale(1.05);
-      background-color: $color-highlight-green-10;
+      // background-color: $color-highlight-green-10;
       border-color: $color-highlight-green-80;
     }
     &:active {
@@ -51,32 +51,64 @@
 
   // Variant: Testing (Same size as default, but different visual cues)
   &.testing {
-    width: 200px; // Slightly larger for the test area
-    height: 200px;
-    border: 1px solid $color-highlight-green-30;
+    width: 240px; // Larger to match screenshot
+    height: 240px;
+    filter: drop-shadow(0 0 30px #72FF87) drop-shadow(0 4px 100px #72FF87) drop-shadow(0 4px 250px rgba(114, 255, 135, 0.20));
     background: radial-gradient(circle, $color-highlight-green-10 0%, $color-dark-green-40 70%);
     
     &:active {
-      background-color: $color-highlight-green-20;
       transform: scale(0.95);
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .innerWhiteCircle {
+      width: 134px;
+      height: 134px;
+      background-color: $color-white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $color-dark-green; // Text color inside white circle
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .overlayText {
+      font-size: 18px;
+      font-weight: 350;
+      line-height: 1.2;
+      color: $color-dark-green;
     }
   }
 
   // Variant: Countdown
   &.countdown {
     border: none;
-    background: transparent;
+    background: $color-moss-green;
+    filter: drop-shadow(0 0 50px rgba(114, 255, 135, 0.70));
     width: 180px;
     height: 180px;
+    padding: 15px;
   }
 
   // Variant: Success
   &.success {
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
     background-color: $color-spring-green;
     border: 1px solid $color-highlight-green;
-    box-shadow: 0 0 40px $color-highlight-green-20;
+    box-shadow: 0 0 40px $color-highlight-green-20; 
+    stroke: #5EF480;
+    filter: drop-shadow(0 0 30px #72FF87) drop-shadow(0 4px 100px #72FF87);
+
   }
 }
 
@@ -84,7 +116,7 @@
   font-family: var(--font-lausanne);
   font-size: 20px;
   font-weight: 350;
-  color: $color-cream;
+  color: $color-forest-green;
   text-align: center;
   max-width: 120px;
   line-height: 1.2;
@@ -163,6 +195,18 @@
   font-weight: 300;
   position: relative;
   z-index: 2;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 // Testing Overlay Styles - Simplified for new design
@@ -181,10 +225,43 @@
   text-align: center;
   max-width: 140px;
   line-height: 1.2;
-  font-weight: 500;
+  font-weight: 350;
 }
 
 .successIcon {
   font-size: 3rem;
   color: $color-dark-green;
+}
+
+// Testing Progress Animation
+.testingProgressSvg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 152px; // Increased to create spacing around the inner circle
+  height: 152px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.testingCircleBackground {
+  fill: none;
+  stroke: rgba($color-white, 0.3);
+  stroke-width: 1.5; // Thinner stroke
+}
+
+.testingCircleProgress {
+  fill: none;
+  stroke: $color-white;
+  stroke-width: 1.5; // Thinner stroke
+  stroke-linecap: round;
+  stroke-dasharray: 301.59; // 2 * pi * 48
+  stroke-dashoffset: 301.59;
+  animation: fillCircle30s 30s linear forwards;
+}
+
+@keyframes fillCircle30s {
+  from { stroke-dashoffset: 301.59; }
+  to { stroke-dashoffset: 0; }
 }

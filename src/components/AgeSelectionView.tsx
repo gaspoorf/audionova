@@ -13,13 +13,7 @@ export default function AgeSelectionView({ onSelect, onBack }: AgeSelectionViewP
   };
 
   return (
-    <main className={styles.container}>
-      <button className={styles.backButton} onClick={onBack}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        Back
-      </button>
+    <main className={`${styles.container} animate-fade-in`}>
       <Header />
       
       <div className={styles.label}>ONE MORE THING</div>

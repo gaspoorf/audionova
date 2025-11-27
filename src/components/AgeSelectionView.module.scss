@@ -39,14 +39,14 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 12px;
-  margin-top: 93px;
+  margin-top: 28px;
   font-weight: 300;
 }
 
 .title {
   font-size: 2rem;
   color: $color-white;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   max-width: 320px;
   line-height: 28.8px;
   font-weight: 300;
@@ -68,7 +68,7 @@
 .button {
   padding: 16px 24px;
   border-radius: 30px;
-  font-size: 1rem;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
   background: transparent;
@@ -77,8 +77,7 @@
   font-weight: 500;
 
   &:hover {
-    background-color: $color-highlight-green;
-    border-color: $color-highlight-green;
+    background-color: $color-white;
     color: $color-dark-green;
   }
 }

@@ -26,6 +26,7 @@ const TEST_DURATION = 30000;
 export function useTestLogic(stage: string, onNext: (next: string) => void) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [status, setStatus] = useState<'intro' | 'countdown' | 'testing' | 'success'>('intro');
+  const [isExitingIntro, setIsExitingIntro] = useState(false);
   const [countdown, setCountdown] = useState(3);
   const [startTime, setStartTime] = useState<number | null>(null);
 
@@ -33,6 +34,7 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
 
   useEffect(() => {
     setStatus('intro');
+    setIsExitingIntro(false);
     setCountdown(3);
     setStartTime(null);
     if (audioRef.current) {
@@ -56,16 +58,23 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
   }, [status, startTime]);
 
   const startTest = useCallback(() => {
-    setStatus('countdown');
-    let count = 3;
-    const timer = setInterval(() => {
-      count--;
-      setCountdown(count);
-      if (count === 0) {
-        clearInterval(timer);
-        beginAudio();
-      }
-    }, 1000);
+    setIsExitingIntro(true);
+    
+    // Wait for fade out animation (500ms)
+    setTimeout(() => {
+      setStatus('countdown');
+      setIsExitingIntro(false);
+      
+      let count = 3;
+      const timer = setInterval(() => {
+        count--;
+        setCountdown(count);
+        if (count === 0) {
+          clearInterval(timer);
+          beginAudio();
+        }
+      }, 1000);
+    }, 500);
   }, []);
 
   const beginAudio = () => {
@@ -98,6 +107,7 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
 
   return {
     status,
+    isExitingIntro,
     countdown,
     config,
     audioRef,

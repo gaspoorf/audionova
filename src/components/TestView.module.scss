@@ -35,7 +35,7 @@
 .title {
   font-size: 2rem;
   line-height: 28.8px;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: $color-white;
   font-weight: 300;
   max-width: 320px;
@@ -46,17 +46,17 @@
     font-weight: 300;
     display: inline-block;
     border-radius: 4px;
-    margin: 0 4px;
+    margin: 0;
   }
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 300;
   color: $color-white;
   margin-bottom: 3rem;
-  max-width: 280px;
-  line-height: 1.5;
+  max-width: 258px;
+  line-height: 16.8px;
 }
 
 .circleButton {

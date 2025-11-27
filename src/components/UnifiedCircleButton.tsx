@@ -50,11 +50,18 @@ export default function UnifiedCircleButton({
         className={`${styles.button} ${styles[variant]}`}
         onClick={onClick}
         disabled={disabled || variant === 'countdown' || variant === 'success'}
+        style={variant === 'testing' && backgroundImage ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
       >
         {/* Testing Mode - Simplified */}
         {variant === 'testing' && (
            <div className={styles.overlay}>
-             {label && <span className={styles.overlayText}>{label}</span>}
+             <svg className={styles.testingProgressSvg} viewBox="0 0 100 100">
+               <circle className={styles.testingCircleBackground} cx="50" cy="50" r="48" />
+               <circle className={styles.testingCircleProgress} cx="50" cy="50" r="48" />
+             </svg>
+             <div className={styles.innerWhiteCircle}>
+               {label && <span className={styles.overlayText}>{label}</span>}
+             </div>
            </div>
         )}
 
@@ -70,7 +77,7 @@ export default function UnifiedCircleButton({
               <circle className={styles.countdownCircleBackground} cx="50" cy="50" r="48" />
               <circle className={styles.countdownCircleProgress} cx="50" cy="50" r="48" />
             </svg>
-            <div className={styles.countdownValue}>{countdownValue}</div>
+            <div key={countdownValue} className={styles.countdownValue}>{countdownValue}</div>
           </div>
         )}
 

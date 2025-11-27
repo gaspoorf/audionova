@@ -3,13 +3,13 @@
 .container {
   @include flex-center;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .label {
   font-size: 14px;
   color: $color-white;
-  margin-bottom: 8px;
+  margin-bottom: 1rem;
   text-transform: uppercase;
   font-weight: 300;
 }

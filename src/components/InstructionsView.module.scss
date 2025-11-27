@@ -15,7 +15,7 @@
 .title {
   font-family: var(--font-lausanne);
   font-size: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   line-height: 28.8px;
   font-weight: 300;
   color: $color-spring-green;
@@ -32,15 +32,15 @@
 
 .instructionItem {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  align-items: flex-start;
+  gap: 12px;
   text-align: left;
   
   p {
     font-family: var(--font-lausanne);
     font-size: 18px;
     font-weight: 300;
-    line-height: 1.4;
+    line-height: normal;
     color: $color-cream;
     flex: 1;
   }
@@ -141,20 +141,7 @@
   padding: 0 20px;
 }
 
-.instructionItem {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  text-align: left;
-  
-  p {
-    margin: 0;
-    color: white;
-    font-size: 1.1rem;
-    line-height: 1.4;
-    flex: 1;
-  }
-}
+
 
 .iconWrapper {
   color: $color-highlight-green;

@@ -3,9 +3,13 @@
 import Image from 'next/image';
 import styles from './Header.module.scss';
 
-export default function Header() {
+interface HeaderProps {
+  compact?: boolean;
+}
+
+export default function Header({ compact }: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${compact ? styles.compact : ''}`}>
       <div className={styles.logo}>
         <Image 
           src="/icons/logo.svg" 

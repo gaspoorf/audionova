@@ -8,7 +8,7 @@ interface WelcomeViewProps {
 
 export default function WelcomeView({ onStart, buttonless }: WelcomeViewProps) {
   return (
-    <main className={styles.container}>
+    <main className={`${styles.container} animate-fade-in`}>
       <Header />
       
       <div className={styles.content}>
