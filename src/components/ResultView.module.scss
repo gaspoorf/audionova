@@ -30,7 +30,7 @@
 }
 
 .resultGraph {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   width: 100%;
   max-width: 300px;
   position: relative;
@@ -149,7 +149,9 @@
   cursor: pointer;
   
   &:hover {
-    background-color: $secondary-color;
+    background-color: $color-white;
+    border-color: $color-white;
+    color: $color-dark-green;
     transform: translateY(-2px);
   }
 }
@@ -175,7 +177,7 @@
 
 .card {
   width: 100%;
-  max-width: 320px;
+  max-width: 327px;
   border: 1px solid $color-highlight-green;
   border-radius: 20px;
   padding: 40px 32px;
@@ -223,7 +225,7 @@
   transform: translate(-50%, -50%);
   z-index: 1;
   opacity: 0.5;
-  width: 180px;
+  width: 250px;
   height: 100px;
 }
 
@@ -233,7 +235,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  width: 180px;
+  width: 250px;
   height: 100px;
 }
 
@@ -249,8 +251,9 @@
   transition: all 0.2s;
 
   &:hover {
-    background: $color-white-10;
-    border-color: $color-highlight-green;
+    background: $color-white;
+    color: $color-dark-green;
+    border-color: $color-white;
   }
 }
 

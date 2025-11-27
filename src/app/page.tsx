@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import WelcomeView from '@/components/WelcomeView';
 import InstructionsView from '@/components/InstructionsView';
 import TestView from '@/components/TestView';
@@ -83,19 +84,34 @@ export default function Home() {
     }
   }
 
+  // Determine Header State
+  const isCompactHeader = view.startsWith('test-') || view === 'result';
+  const showDecorations = ['welcome', 'instructions', 'result'].includes(view);
+
   return (
     <div className={styles.mainLayout}>
-      {/* Background Pattern */}
-      <div className={styles.backgroundLayer}>
-        <svg viewBox="0 0 375 812" preserveAspectRatio="xMidYMid slice">
-          <circle cx="50%" cy="40%" r="100" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <circle cx="50%" cy="40%" r="180" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <circle cx="50%" cy="40%" r="280" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <circle cx="50%" cy="40%" r="400" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <circle cx="50%" cy="40%" r="550" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <path d="M-100 600 Q 187 500 475 600" stroke="rgba(255,255,255,0.03)" strokeWidth="1" fill="none" />
-          <path d="M-100 650 Q 187 550 475 650" stroke="rgba(255,255,255,0.03)" strokeWidth="1" fill="none" />
-        </svg>
+      {/* Ellipse Decorations */}
+      <div className={`${styles.decorationsLayer} ${showDecorations ? styles.visible : ''}`}>
+        <div className={styles.ellipseSmallWrapper}>
+          <Image 
+            src="/icons/Ellipse-small.svg" 
+            alt="" 
+            width={400} 
+            height={400} 
+            className={styles.ellipseSmall}
+            priority
+          />
+        </div>
+        <div className={styles.ellipseBigWrapper}>
+          <Image 
+            src="/icons/Ellipse-big.svg" 
+            alt="" 
+            width={800} 
+            height={800} 
+            className={styles.ellipseBig}
+            priority
+          />
+        </div>
       </div>
 
       {/* Persistent Circle Button */}

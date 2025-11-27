@@ -28,6 +28,11 @@
   line-height: 43.2px;
   font-weight: 350;
   color: $color-spring-green;
+
+  @media (min-width: 1024px) {
+    font-size: 4rem;
+    line-height: 57.6px;
+  }
 }
 
 .description {
@@ -40,6 +45,10 @@
   font-weight: 300;
   strong {
     font-weight: 500;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 24px;
   }
 }
 

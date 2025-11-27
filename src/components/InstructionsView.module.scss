@@ -19,6 +19,11 @@
   line-height: 28.8px;
   font-weight: 300;
   color: $color-spring-green;
+
+  @media (min-width: 1024px) {
+    font-size: 3rem;
+    line-height: 57.6px;;
+  }
 }
 
 .instructionList {

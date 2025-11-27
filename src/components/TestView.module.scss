@@ -42,6 +42,11 @@
   max-width: 320px;
   white-space: pre-line;
 
+  @media (min-width: 1024px) {
+    font-size: 3rem;
+    line-height: 40px;
+  }
+
   strong {
     color: $color-spring-green;
     font-weight: 300;
@@ -58,6 +63,12 @@
   margin-bottom: 3rem;
   max-width: 258px;
   line-height: 16.8px;
+
+  @media (min-width: 1024px) {
+    max-width: 320px;
+    font-size: 18px;
+    line-height: normal;
+  }
 }
 
 .circleButton {

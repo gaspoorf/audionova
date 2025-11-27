@@ -186,7 +186,7 @@ export default function ResultView() {
             <Image 
               src="/icons/elipse.svg" 
               alt="" 
-              width={180} 
+              width={250} 
               height={100} 
               className={styles.ringBack}
             />
@@ -200,7 +200,7 @@ export default function ResultView() {
             <Image 
               src="/icons/half-elipse.svg" 
               alt="" 
-              width={180} 
+              width={250} 
               height={100} 
               className={styles.ringFront}
             />
