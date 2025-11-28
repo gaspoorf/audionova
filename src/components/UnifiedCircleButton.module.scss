@@ -188,12 +188,23 @@
 @keyframes ring-breathe {
   0% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    border-radius: 50%;
+  }
+  25% {
+    transform: translate(-50.5%, -49.5%) rotate(46deg) scale(1.02);
+    border-radius: 52% 48% 51% 49% / 51% 49% 52% 48%;
   }
   50% {
-    transform: translate(-50%, -50%) rotate(55deg) scale(0.9);
+    transform: translate(-50%, -50%) rotate(44deg) scale(1.05);
+    border-radius: 49% 51% 48% 52% / 48% 52% 49% 51%;
+  }
+  75% {
+    transform: translate(-49.5%, -50.5%) rotate(46deg) scale(1.02);
+    border-radius: 51% 49% 52% 48% / 52% 48% 49% 51%;
   }
   100% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    border-radius: 50%;
   }
 }
 
@@ -211,13 +222,11 @@
 .pulseCircle1 { 
   @include oval-ring(240px, 140px, 0.3); 
   animation-delay: 0s, 0.8s; 
-  animation-duration: 0.8s, 12s; // Slower rotation
   &.exiting { animation: ring-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 }
 .pulseCircle2 { 
   @include oval-ring(300px, 180px, 0.2); 
-  animation-delay: 0.1s, 0.5s; 
-  animation-duration: 0.8s, 9s; // Slower rotation
+  animation-delay: 0.1s, 0.9s; 
   &.exiting { animation: ring-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 }
 
@@ -246,13 +255,11 @@
   @include oval-ring(240px, 140px, 0.2); 
   border-color: $color-highlight-green-30; 
   animation-delay: 0s, 0.8s;
-  animation-duration: 0.8s, 12s;
 }
 .successRipple2 { 
   @include oval-ring(300px, 180px, 0.15); 
   border-color: $color-highlight-green-20; 
-  animation-delay: 0.1s, 0.5s;
-  animation-duration: 0.8s, 9s;
+  animation-delay: 0.1s, 0.9s;
 }
 
 // Countdown Styles

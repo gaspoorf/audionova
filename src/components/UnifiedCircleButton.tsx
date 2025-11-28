@@ -38,8 +38,9 @@ export default function UnifiedCircleButton({
     // Only animate exit for default variant (pulse circles)
     if (variant === 'default') {
       setIsExiting(true);
+      // Call onClick immediately to allow parent to handle transition/animation timing
+      onClick();
       setTimeout(() => {
-        onClick();
         setIsExiting(false);
       }, 500); // Match CSS duration
     } else {
@@ -71,7 +72,7 @@ export default function UnifiedCircleButton({
     // Irregular intervals between groups
     const getNextGroupDelay = () => {
       // return 2500 + Math.random() * 2000;
-      return 2000 + Math.random() * 500; // Faster: 1s to 2.2s between groups
+      return 2000 + Math.random() * 1500; // Faster: 1s to 2.2s between groups
     };
 
     const render = (time: number) => {

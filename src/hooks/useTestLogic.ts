@@ -119,25 +119,30 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
   const startTest = useCallback(() => {
     initAudioContext(); // Initialize Audio Context on user interaction
 
-    // Immediate transition since the button handles the delay
-    setStatus('countdown');
-    setIsExitingIntro(false);
-    
-    // Play sound for 3
-    new Audio('/sounds/effects/count.mp3').play().catch(() => {});
+    // Trigger exit animation for intro elements
+    setIsExitingIntro(true);
 
-    let count = 3;
-    const timer = setInterval(() => {
-      count--;
-      if (count > 0) {
-        new Audio('/sounds/effects/count.mp3').play().catch(() => {});
-      }
-      setCountdown(count);
-      if (count === 0) {
-        clearInterval(timer);
-        beginAudio();
-      }
-    }, 1000);
+    // Wait for animation (500ms) before starting countdown
+    setTimeout(() => {
+      setStatus('countdown');
+      setIsExitingIntro(false);
+      
+      // Play sound for 3
+      new Audio('/sounds/effects/count.mp3').play().catch(() => {});
+
+      let count = 3;
+      const timer = setInterval(() => {
+        count--;
+        if (count > 0) {
+          new Audio('/sounds/effects/count.mp3').play().catch(() => {});
+        }
+        setCountdown(count);
+        if (count === 0) {
+          clearInterval(timer);
+          beginAudio();
+        }
+      }, 1000);
+    }, 500);
   }, [initAudioContext]);
 
   const beginAudio = () => {

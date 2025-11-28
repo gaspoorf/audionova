@@ -14,6 +14,43 @@ interface ResultViewProps {
 export default function ResultView({ onLegalClick }: ResultViewProps) {
   const [score, setScore] = useState<number | null>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+
+  // Scroll Reveal Observer
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      // Sort entries by DOM position to ensure correct stagger order
+      // (IntersectionObserver entries aren't guaranteed to be in DOM order)
+      const sortedEntries = entries.sort((a, b) => {
+        const position = a.target.compareDocumentPosition(b.target);
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+        if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+        return 0;
+      });
+
+      let intersectCount = 0;
+      sortedEntries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Add staggered delay for elements appearing together
+          // Only apply delay if multiple elements appear at once
+          (entry.target as HTMLElement).style.transitionDelay = `${intersectCount * 0.15}s`;
+          entry.target.classList.add(styles.visible);
+          observer.unobserve(entry.target); // Only animate once
+          intersectCount++;
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px' // Trigger slightly before bottom
+    });
+
+    const elements = containerRef.current.querySelectorAll(`.${styles.scrollReveal}`);
+    elements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [score]); // Re-run when score loads (and content renders)
 
   useEffect(() => {
     const s1 = Number(localStorage.getItem('sound1Score') || 0);
@@ -125,54 +162,56 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
   ];
 
   return (
-    <main className={`${styles.container} animate-fade-in`}>
-      <Header compact />
-      <h1 className={styles.title}>{getTitle()}</h1>
-      
-      <div className={styles.resultGraph}>
-        <div className={styles.gaugeContainer}>
-          <div className={styles.averageLabel}>
-            <p>Average</p>
+    <main ref={containerRef} className={styles.container}>
+      <div className={styles.fadeIn}>
+        <Header compact />
+        <h1 className={styles.title}>{getTitle()}</h1>
+        
+        <div className={styles.resultGraph}>
+          <div className={styles.gaugeContainer}>
+            <div className={styles.averageLabel}>
+              <p>Average</p>
+            </div>
+            <svg className={styles.gaugeSvg} viewBox="0 0 300 160">
+              {segments.map((seg, i) => {
+                const isActive = i < scoreLevel;
+                return (
+                  <svg 
+                    key={i} 
+                    x={seg.x} 
+                    y={seg.y} 
+                    width={seg.width} 
+                    height={seg.height} 
+                    viewBox={seg.viewBox}
+                    overflow="visible"
+                  >
+                    <path 
+                      d={seg.path} 
+                      className={isActive ? styles.activeSegment : styles.inactiveSegment}
+                    />
+                  </svg>
+                );
+              })}
+            </svg>
+            
+            {/* Needle / Spotlight */}
+            <div 
+              ref={spotlightRef}
+              className={styles.spotlight} 
+            />
+            
+            <div className={styles.resultLabel}>Your result</div>
           </div>
-          <svg className={styles.gaugeSvg} viewBox="0 0 300 160">
-            {segments.map((seg, i) => {
-              const isActive = i < scoreLevel;
-              return (
-                <svg 
-                  key={i} 
-                  x={seg.x} 
-                  y={seg.y} 
-                  width={seg.width} 
-                  height={seg.height} 
-                  viewBox={seg.viewBox}
-                  overflow="visible"
-                >
-                  <path 
-                    d={seg.path} 
-                    className={isActive ? styles.activeSegment : styles.inactiveSegment}
-                  />
-                </svg>
-              );
-            })}
-          </svg>
-          
-          {/* Needle / Spotlight */}
-          <div 
-            ref={spotlightRef}
-            className={styles.spotlight} 
-          />
-          
-          <div className={styles.resultLabel}>Your result</div>
         </div>
       </div>
 
       {scoreLevel <= 3 && (
-        <button className={styles.button} onClick={() => window.open('https://www.audionova.com', '_blank')}>
+        <button className={`${styles.button} ${styles.scrollReveal}`} onClick={() => window.open('https://www.audionova.com', '_blank')}>
           Get a full hearing check
         </button>
       )}
       
-      <button className={styles.inviteLink}>
+      <button className={`${styles.inviteLink} ${styles.scrollReveal}`}>
         Invite someone to try the test
         <Image 
           src="/icons/arrow-top-right.svg" 
@@ -183,7 +222,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
       </button>
 
       {scoreLevel < 3 ? (
-        <div className={styles.card}>
+        <div className={`${styles.card} ${styles.scrollReveal}`}>
           <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
           <h2 className={styles.cardTitle}>Phonak Virto™ R Infinio</h2>
           <div className={styles.productImage}>
@@ -212,7 +251,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
           <button className={styles.outlineButton}>Discover the product</button>
         </div>
       ) : (
-        <div className={`${styles.card} ${styles.articleCard}`}>
+        <div className={`${styles.card} ${styles.articleCard} ${styles.scrollReveal}`}>
           <div className={styles.articleImageContainer}>
             <Image 
               src="/img/articles/article-1.webp" 
@@ -235,7 +274,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
         </div>
       )}
 
-      <div className={styles.card}>
+      <div className={`${styles.card} ${styles.scrollReveal}`}>
         <div className={styles.cardLabel}>NEED ASSISTANCE?</div>
         <h2 className={styles.cardTitle}>Meet our hearing care specialists</h2>
         <div className={styles.contactList}>

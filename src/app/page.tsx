@@ -136,9 +136,13 @@ export default function Home() {
     if (ambientContextRef.current?.state === 'suspended') {
       ambientContextRef.current.resume();
     }
-    setView('instructions');
+    // Wait for button animation
+    setTimeout(() => setView('instructions'), 500);
   };
-  const handleReady = () => setView('test-restaurant');
+  const handleReady = () => {
+    // Wait for button animation
+    setTimeout(() => setView('test-restaurant'), 500);
+  };
 
   const handleTestNext = (nextStage: string) => {
     if (nextStage === 'street') setView('test-street');
@@ -259,7 +263,7 @@ export default function Home() {
       </div>
 
       {/* Content Views (Buttonless) */}
-      <div className={`${styles.contentLayer} ${view === 'age-selection' ? styles.interactive : ''}`}>
+      <div className={`${styles.contentLayer} ${(view === 'age-selection' || view === 'result') ? styles.interactive : ''}`}>
         {view === 'welcome' && <WelcomeView buttonless />}
         
         {view === 'instructions' && <InstructionsView onReady={handleReady} buttonless />}
