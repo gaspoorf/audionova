@@ -92,18 +92,27 @@ export default function UnifiedCircleButton({
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
-      // --- DRAW HALO (Organic Blob) ---
-      ctx.save();
-      ctx.filter = 'blur(50px)'; 
-      ctx.fillStyle = 'rgba(94, 244, 128, 0.35)'; // Reduced opacity
-      
-      ctx.beginPath();
-      const haloPoints = 12; // More points for smoother oval shape
-      
       // Base Oval Dimensions (Taller than wide, tilted)
       const baseRadiusX = 220; 
       const baseRadiusY = 300;
       const rotation = -20 * (Math.PI / 180); // Same tilt as ripples
+
+      // --- DRAW HALO (Organic Blob) ---
+      ctx.save();
+      
+      // Use "Offset Shadow" technique to create a pure blur that works on all devices (including iOS)
+      // We draw the shape far off-screen, and cast a blurred shadow back onto the screen.
+      // This eliminates the hard edge of the fill and creates a perfect soft glow.
+      const shadowOffset = 10000;
+      ctx.translate(-shadowOffset, 0);
+      ctx.shadowOffsetX = shadowOffset;
+      ctx.shadowOffsetY = 0;
+      ctx.shadowBlur = 80; // High blur for soft "faded" look
+      ctx.shadowColor = 'rgba(94, 244, 128, 0.5)'; // Adjust opacity for "bien fondu"
+      ctx.fillStyle = 'rgba(94, 244, 128, 1)'; // Solid fill off-screen to cast strong shadow
+      
+      ctx.beginPath();
+      const haloPoints = 12; // More points for smoother oval shape
 
       // Simulate speech reaction (fast, irregular pulsing)
       // Combine multiple sine waves of different high frequencies
