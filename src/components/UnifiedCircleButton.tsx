@@ -209,8 +209,8 @@ export default function UnifiedCircleButton({
         const currentCy = centerY - (150 * ease);
 
         // Opacity: Fade out faster to avoid "piling up" at the end
-        // Reduced base opacity to 0.5 for a lighter feel
-        const opacity = 0.5 * Math.pow(1 - progress, 2.5);
+        // Reduced base opacity to 0.3 for a lighter feel
+        const opacity = 0.15 * Math.pow(1 - progress, 2.5);
 
         ctx.beginPath();
         ctx.ellipse(centerX, currentCy, currentRadiusX, currentRadiusY, rotation, 0, 2 * Math.PI);

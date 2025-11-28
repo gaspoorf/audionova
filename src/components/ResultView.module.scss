@@ -52,15 +52,18 @@
   transform: rotate(0deg);
 }
 
-.activeSegment {
-  fill: $color-highlight-green;
-  // filter: drop-shadow(0 0 8px $color-highlight-green-60);
+.segment {
   transition: fill 0.3s ease;
 }
 
+.activeSegment0 { fill: mix($color-spring-green, $color-tea-green, 20%); }
+.activeSegment1 { fill: mix($color-spring-green, $color-tea-green, 40%); }
+.activeSegment2 { fill: mix($color-spring-green, $color-tea-green, 60%); }
+.activeSegment3 { fill: mix($color-spring-green, $color-tea-green, 80%); }
+.activeSegment4 { fill: $color-spring-green; }
+
 .inactiveSegment {
   fill: rgba(255, 255, 255, 0.2);
-  transition: fill 0.3s ease;
 }
 
 .gaugePath {
@@ -374,4 +377,78 @@
   margin-bottom: 24px;
   line-height: 1.5;
   font-weight: 300;
+}
+
+// Desktop Responsive Styles
+.desktopGrid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 1200px;
+    gap: 24px;
+    padding: 0 40px;
+  }
+}
+
+.resultCard {
+  // Mobile: Reset card styles to match original "transparent" look
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: 1024px) {
+    // Desktop: Apply card styles
+    border: 1px solid $color-highlight-green !important;
+    background: $color-dark-green-30 !important;
+    padding: 40px 32px !important;
+    width: 100%;
+    max-width: 327px;
+    height: auto;
+    
+    // Adjust internal spacing for desktop card
+    .resultGraph {
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.resultActions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// Adjust Title for Desktop
+@media (min-width: 1024px) {
+  .title {
+    max-width: 600px;
+    font-size: 3rem;
+    margin-bottom: 60px;
+    line-height: 43px;
+  }
+
+  @media (max-height: 720px) {
+    .title {
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+  }
+  
+  .card {
+    margin-bottom: 0; // Grid handles gap
+    height: auto; // Stretch to fill height
+  }
 }

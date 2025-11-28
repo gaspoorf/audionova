@@ -33,6 +33,11 @@
     font-size: 4rem;
     line-height: 57.6px;
   }
+
+  @media (min-width: 1024px) and (max-height: 720px) {
+    margin-bottom: 1rem;
+    font-size: 3rem; // Slightly smaller title for short screens
+  }
 }
 
 .description {

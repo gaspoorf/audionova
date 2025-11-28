@@ -167,134 +167,144 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
         <Header compact />
         <h1 className={styles.title}>{getTitle()}</h1>
         
-        <div className={styles.resultGraph}>
-          <div className={styles.gaugeContainer}>
-            <div className={styles.averageLabel}>
-              <p>Average</p>
-            </div>
-            <svg className={styles.gaugeSvg} viewBox="0 0 300 160">
-              {segments.map((seg, i) => {
-                const isActive = i < scoreLevel;
-                return (
-                  <svg 
-                    key={i} 
-                    x={seg.x} 
-                    y={seg.y} 
-                    width={seg.width} 
-                    height={seg.height} 
-                    viewBox={seg.viewBox}
-                    overflow="visible"
-                  >
-                    <path 
-                      d={seg.path} 
-                      className={isActive ? styles.activeSegment : styles.inactiveSegment}
-                    />
-                  </svg>
-                );
-              })}
-            </svg>
-            
-            {/* Needle / Spotlight */}
-            <div 
-              ref={spotlightRef}
-              className={styles.spotlight} 
-            />
-            
-            <div className={styles.resultLabel}>Your result</div>
-          </div>
-        </div>
       </div>
 
-      {scoreLevel <= 3 && (
-        <button className={`${styles.button} ${styles.scrollReveal}`} onClick={() => window.open('https://www.audionova.com', '_blank')}>
-          Get a full hearing check
-        </button>
-      )}
-      
-      <button className={`${styles.inviteLink} ${styles.scrollReveal}`}>
-        Invite someone to try the test
-        <Image 
-          src="/icons/arrow-top-right.svg" 
-          alt="" 
-          width={16} 
-          height={16} 
-        />
-      </button>
+      <div className={styles.desktopGrid}>
+        {/* Column 1: Result & Actions */}
+        <div className={`${styles.card} ${styles.resultCard} ${styles.scrollReveal}`}>
+          <div className={styles.resultGraph}>
+            <div className={styles.gaugeContainer}>
+              <div className={styles.averageLabel}>
+                <p>Average</p>
+              </div>
+              <svg className={styles.gaugeSvg} viewBox="0 0 300 160">
+                {segments.map((seg, i) => {
+                  const isActive = i < scoreLevel;
+                  return (
+                    <svg 
+                      key={i} 
+                      x={seg.x} 
+                      y={seg.y} 
+                      width={seg.width} 
+                      height={seg.height} 
+                      viewBox={seg.viewBox}
+                      overflow="visible"
+                    >
+                      <path 
+                        d={seg.path} 
+                        className={`${styles.segment} ${isActive ? styles[`activeSegment${i}`] : styles.inactiveSegment}`}
+                      />
+                    </svg>
+                  );
+                })}
+              </svg>
+              
+              {/* Needle / Spotlight */}
+              <div 
+                ref={spotlightRef}
+                className={styles.spotlight} 
+              />
+              
+              <div className={styles.resultLabel}>Your result</div>
+            </div>
+          </div>
 
-      {scoreLevel < 3 ? (
-        <div className={`${styles.card} ${styles.scrollReveal}`}>
-          <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
-          <h2 className={styles.cardTitle}>Phonak Virto™ R Infinio</h2>
-          <div className={styles.productImage}>
-            <Image 
-              src="/icons/elipse.svg" 
-              alt="" 
-              width={250} 
-              height={100} 
-              className={styles.ringBack}
-            />
-            <Image 
-              src="/img/products/phonak.webp" 
-              alt="Phonak Virto™ R Infinio" 
-              width={140} 
-              height={140} 
-              className={styles.productImg}
-            />
-            <Image 
-              src="/icons/half-elipse.svg" 
-              alt="" 
-              width={250} 
-              height={100} 
-              className={styles.ringFront}
-            />
-          </div>
-          <button className={styles.outlineButton}>Discover the product</button>
-        </div>
-      ) : (
-        <div className={`${styles.card} ${styles.articleCard} ${styles.scrollReveal}`}>
-          <div className={styles.articleImageContainer}>
-            <Image 
-              src="/img/articles/article-1.webp" 
-              alt="Protect Your Hearing" 
-              width={320} 
-              height={200} 
-              className={styles.articleImage}
-            />
-          </div>
-          <div className={styles.articleContent}>
-            <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
-            <h2 className={styles.cardTitle}>Protect Your Hearing</h2>
-            <p className={styles.articleDescription}>
-              Empower yourself with hearing loss prevention tips from AudioNova to enjoy a life full of sound.
-            </p>
-            <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/blog', '_blank')}>
-              Read the article
+          <div className={styles.resultActions}>
+            {scoreLevel <= 3 && (
+              <button className={styles.button} onClick={() => window.open('https://www.audionova.com', '_blank')}>
+                Book your appointment
+              </button>
+            )}
+            
+            <button className={styles.inviteLink}>
+              Invite someone to take the test
+              <Image 
+                src="/icons/arrow-top-right.svg" 
+                alt="" 
+                width={16} 
+                height={16} 
+              />
             </button>
           </div>
         </div>
-      )}
 
-      <div className={`${styles.card} ${styles.scrollReveal}`}>
-        <div className={styles.cardLabel}>NEED ASSISTANCE?</div>
-        <h2 className={styles.cardTitle}>Meet our hearing care specialists</h2>
-        <div className={styles.contactList}>
-          <div className={styles.contactItem}>
-            <Image src="/icons/location.svg" alt="" width={24} height={24} />
-            <a href="#">
-              Find a center
-            </a>
+        {/* Column 2: Recommendation */}
+        {scoreLevel < 3 ? (
+          <div className={`${styles.card} ${styles.scrollReveal}`}>
+            <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
+            <h2 className={styles.cardTitle}>Phonak Virto™ R Infinio</h2>
+            <div className={styles.productImage}>
+              <Image 
+                src="/icons/elipse.svg" 
+                alt="" 
+                width={250} 
+                height={100} 
+                className={styles.ringBack}
+              />
+              <Image 
+                src="/img/products/phonak.webp" 
+                alt="Phonak Virto™ R Infinio" 
+                width={140} 
+                height={140} 
+                className={styles.productImg}
+              />
+              <Image 
+                src="/icons/half-elipse.svg" 
+                alt="" 
+                width={250} 
+                height={100} 
+                className={styles.ringFront}
+              />
+            </div>
+            <button className={styles.outlineButton}>Discover the product</button>
           </div>
-          <div className={styles.contactItem}>
-            <Image src="/icons/call.svg" alt="" width={24} height={24} />
-            <a href="tel:0801907966">
-              0 801 907 966
-            </a>
+        ) : (
+          <div className={`${styles.card} ${styles.articleCard} ${styles.scrollReveal}`}>
+            <div className={styles.articleImageContainer}>
+              <Image 
+                src="/img/articles/article-1.webp" 
+                alt="Protect Your Hearing" 
+                width={320} 
+                height={200} 
+                className={styles.articleImage}
+              />
+            </div>
+            <div className={styles.articleContent}>
+              <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
+              <h2 className={styles.cardTitle}>Protect Your Hearing</h2>
+              <p className={styles.articleDescription}>
+                Empower yourself with hearing loss prevention tips from AudioNova to enjoy a life full of sound.
+              </p>
+              <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/blog', '_blank')}>
+                Read the article
+              </button>
+            </div>
           </div>
-          <div className={styles.contactItem}>
-            <Image src="/icons/email.svg" alt="" width={24} height={24} />
-            <a href="mailto:crc@auditionsante.fr">
-              crc@auditionsante.fr
-            </a>
+        )}
+
+        {/* Column 3: Contact */}
+        <div className={`${styles.card} ${styles.scrollReveal}`}>
+          <div className={styles.cardLabel}>NEED ASSISTANCE?</div>
+          <h2 className={styles.cardTitle}>Meet our hearing care specialists</h2>
+          <div className={styles.contactList}>
+            <div className={styles.contactItem}>
+              <Image src="/icons/location.svg" alt="" width={24} height={24} />
+              <a href="#">
+                Find a center
+              </a>
+            </div>
+            <div className={styles.contactItem}>
+              <Image src="/icons/call.svg" alt="" width={24} height={24} />
+              <a href="tel:0801907966">
+                0 801 907 966
+              </a>
+            </div>
+            <div className={styles.contactItem}>
+              <Image src="/icons/email.svg" alt="" width={24} height={24} />
+              <a href="mailto:crc@auditionsante.fr">
+                crc@auditionsante.fr
+              </a>
+            </div>
           </div>
         </div>
       </div>
