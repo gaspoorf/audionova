@@ -259,7 +259,7 @@ export default function Home() {
       </div>
 
       {/* Content Views (Buttonless) */}
-      <div className={styles.contentLayer}>
+      <div className={`${styles.contentLayer} ${view === 'age-selection' ? styles.interactive : ''}`}>
         {view === 'welcome' && <WelcomeView buttonless />}
         
         {view === 'instructions' && <InstructionsView onReady={handleReady} buttonless />}

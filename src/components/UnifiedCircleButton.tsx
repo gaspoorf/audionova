@@ -70,7 +70,8 @@ export default function UnifiedCircleButton({
     // Helper to generate next delay
     // Irregular intervals between groups
     const getNextGroupDelay = () => {
-      return 2000 + Math.random() * 1500; // 2s to 3.5s between groups
+      // return 2500 + Math.random() * 2000;
+      return 2000 + Math.random() * 500; // Faster: 1s to 2.2s between groups
     };
 
     const render = (time: number) => {
@@ -116,11 +117,11 @@ export default function UnifiedCircleButton({
 
       // Simulate speech reaction (fast, irregular pulsing)
       // Combine multiple sine waves of different high frequencies
-      // Slowed down slightly (approx 70% of previous speed)
+      // Slowed down further (approx 50% of original speed)
       const speechPulse = (
-        Math.sin(time * 0.007) * 0.5 + 
-        Math.sin(time * 0.016) * 0.3 + 
-        Math.sin(time * 0.033) * 0.2
+        Math.sin(time * 0.004) * 0.5 + 
+        Math.sin(time * 0.010) * 0.3 + 
+        Math.sin(time * 0.020) * 0.2
       ); 
       // Result varies between approx -1 and 1, changing quickly
       
@@ -133,8 +134,8 @@ export default function UnifiedCircleButton({
         const angle = (Math.PI * 2 * i) / haloPoints;
         
         // Organic surface deformation (wobble)
-        // Slowed down slightly
-        const wobble = Math.sin(time * 0.002 + i * 2) * 20 + Math.cos(time * 0.0035 + i * 3) * 20;
+        // Slowed down further
+        const wobble = Math.sin(time * 0.0015 + i * 2) * 20 + Math.cos(time * 0.0025 + i * 3) * 20;
         
         // Calculate point on unrotated oval
         const rX = (baseRadiusX * currentScale) + wobble;
@@ -180,7 +181,7 @@ export default function UnifiedCircleButton({
 
         if (ripple.age < 0) continue; // Wait for start
 
-        const maxAge = 5000; // Slightly faster to reduce stagnation
+        const maxAge = 7000; // Slower expansion
         const progress = ripple.age / maxAge;
 
         if (progress >= 1) {

@@ -96,11 +96,11 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(1, elapsed / TEST_DURATION);
         
-        // Power of 6 curve: starts very low (0.0001) and stays low for a long time
-        // At 15s (50%), volume is only ~1.5%
-        // At 25s (83%), volume reaches ~33%
-        // This ensures people with good hearing don't hear it immediately at "medium" volume
-        const volume = 0.0001 + (Math.pow(progress, 6) * 0.9999);
+        // Power of 3 curve: smoother progression
+        // Previous Power of 6 was too quiet for too long, then too loud too fast.
+        // At 15s (50%), volume is ~12.5% (audible but soft)
+        // At 25s (83%), volume is ~57% (loud but not instant max)
+        const volume = 0.0001 + (Math.pow(progress, 3) * 0.9999);
         
         // Apply to GainNode (iOS)
         if (gainNodeRef.current) {

@@ -23,15 +23,15 @@
 
 .contentLayer {
   position: relative;
-  z-index: 20; // Ensure content is above video
+  z-index: 100; // Ensure content is above video
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   pointer-events: none; // Allow clicks to pass through to trigger
 
-  > * {
-    pointer-events: auto; // Re-enable pointer events for children
+  &.interactive {
+    pointer-events: auto;
   }
 }
 
