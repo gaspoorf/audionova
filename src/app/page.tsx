@@ -183,7 +183,7 @@ export default function Home() {
       circleVariant = 'testing';
       circleLabel = <>I heard<br />the sound</>;
       circleOnClick = handleHeard;
-      circleBackgroundImage = `/img/sounds/${currentTestStage}.jpg`;
+      circleBackgroundImage = `/img/sounds/${currentTestStage}.webp`;
     } else if (testStatus === 'success') {
       circleVariant = 'success';
     }

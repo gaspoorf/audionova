@@ -224,10 +224,18 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150vmax; // Cover the whole screen
+  width: 150vmax; // Default (Mobile): Cover the whole screen for immersive feel
   height: 150vmax;
   pointer-events: none;
   z-index: 1; // Behind button
+
+  // Desktop: Constrain size to prevent "enormous" halo
+  @media (min-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    max-width: 800px;
+    max-height: 800px;
+  }
 }
 
 // Success Ripples
