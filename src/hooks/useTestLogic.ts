@@ -4,19 +4,19 @@ const STAGE_CONFIG: Record<string, { title: string; description: string; next: s
   restaurant: {
     title: "Hear\nthe restaurant\nambiance",
     keyword: "restaurant",
-    description: "A sound will play for about X seconds and will gradually get louder. Press the button as soon as you hear it.",
+    description: "A sound will play for about 30 seconds and will gradually get louder. Press the button as soon as you hear it.",
     next: "street"
   },
   street: {
     title: "Hear\nthe street\nambiance",
     keyword: "street",
-    description: "A sound will play for about X seconds and will gradually get louder. Press the button as soon as you hear it.",
+    description: "A sound will play for about 30 seconds and will gradually get louder. Press the button as soon as you hear it.",
     next: "music"
   },
   music: {
     title: "Hear\nthe musical\nambiance",
     keyword: "musical",
-    description: "A sound will play for about X seconds and will gradually get louder. Press the button as soon as you hear it.",
+    description: "A sound will play for about 30 seconds and will gradually get louder. Press the button as soon as you hear it.",
     next: "age-selection"
   }
 };
