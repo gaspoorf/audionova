@@ -13,6 +13,15 @@
 				"$tsc-watch"
 			],
 			"group": "test"
+		},
+		{
+			"label": "update_css",
+			"type": "shell",
+			"command": "echo \"ResultView.module.scss updated\"",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
 		}
 	]
 }

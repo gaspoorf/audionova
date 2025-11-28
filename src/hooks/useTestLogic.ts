@@ -49,8 +49,14 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
         if (!audioRef.current) return;
         const elapsed = Date.now() - startTime;
         const progress = Math.min(1, elapsed / TEST_DURATION);
-        const volume = Math.pow(progress, 2);
-        audioRef.current.volume = volume;
+        
+        // Power of 6 curve: starts very low (0.0001) and stays low for a long time
+        // At 15s (50%), volume is only ~1.5%
+        // At 25s (83%), volume reaches ~33%
+        // This ensures people with good hearing don't hear it immediately at "medium" volume
+        const volume = 0.0001 + (Math.pow(progress, 6) * 0.9999);
+        
+        audioRef.current.volume = Math.min(1, volume);
         if (progress >= 1) handleHeard();
       }, 100);
       return () => clearInterval(interval);
@@ -65,9 +71,15 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
       setStatus('countdown');
       setIsExitingIntro(false);
       
+      // Play sound for 3
+      new Audio('/sounds/effects/count.mp3').play().catch(() => {});
+
       let count = 3;
       const timer = setInterval(() => {
         count--;
+        if (count > 0) {
+          new Audio('/sounds/effects/count.mp3').play().catch(() => {});
+        }
         setCountdown(count);
         if (count === 0) {
           clearInterval(timer);
@@ -91,8 +103,14 @@ export function useTestLogic(stage: string, onNext: (next: string) => void) {
     
     const elapsed = Date.now() - startTime;
     const progress = Math.min(1, elapsed / TEST_DURATION);
-    const volumeAtClick = Math.pow(progress, 2) * 100;
-    const score = Math.max(0, Math.round(100 - volumeAtClick));
+    
+    // Scoring Logic:
+    // We decouple the score from the volume curve.
+    // Volume stays low for a long time (Power of 6) to avoid "everyone hears it at once".
+    // But Score drops faster (Power of 2) to penalize waiting.
+    // Example: At 15s (50%), Volume is ~1.5% (tiny), but Score is 75/100 (already lost 25pts).
+    const scorePenalty = Math.pow(progress, 2);
+    const score = Math.max(0, Math.round(100 - (scorePenalty * 100)));
 
     const scoreKey = `sound${['restaurant', 'street', 'music'].indexOf(stage) + 1}Score`;
     localStorage.setItem(scoreKey, score.toString());

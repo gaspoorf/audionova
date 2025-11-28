@@ -21,6 +21,7 @@
   height: 120px;
   border-radius: 50%; 
   cursor: pointer;
+  pointer-events: auto;
   position: relative;
   z-index: 10;
   display: flex;
@@ -141,14 +142,90 @@
   transition: all 0.5s;
 }
 
-.pulseCircle1 { @include circle-ring(180px, 0.3); }
-.pulseCircle2 { @include circle-ring(240px, 0.2); }
-.pulseCircle3 { @include circle-ring(320px, 0.1); }
+@mixin oval-ring($width, $height, $opacity) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(30deg);
+  width: $width;
+  height: $height;
+  border-radius: 50%;
+  border: 1px solid $color-highlight-green-30;
+  opacity: 0; // Start invisible for animation
+  pointer-events: none;
+  --target-opacity: #{$opacity};
+  animation: 
+    ring-enter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    ring-breathe 6s ease-in-out 0.8s infinite;
+}
+
+@keyframes ring-enter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(30deg) scale(0.6);
+  }
+  100% {
+    opacity: var(--target-opacity);
+    transform: translate(-50%, -50%) rotate(30deg) scale(1);
+  }
+}
+
+@keyframes ring-breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(30deg) scale(1);
+    border-radius: 50%;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(32deg) scale(1.03);
+    border-radius: 51% 49% 52% 48% / 49% 52% 48% 51%;
+  }
+}
+
+@keyframes ring-exit {
+  0% {
+    opacity: var(--target-opacity);
+    transform: translate(-50%, -50%) rotate(30deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(30deg) scale(0.6);
+  }
+}
+
+.pulseCircle1 { 
+  @include oval-ring(240px, 140px, 0.3); 
+  animation-delay: 0s, 0.8s; 
+  &.exiting { animation: ring-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+}
+.pulseCircle2 { 
+  @include oval-ring(340px, 200px, 0.2); 
+  animation-delay: 0.1s, 0.9s; 
+  &.exiting { animation: ring-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+}
+
+// Testing Ripples (Canvas)
+.rippleCanvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150vmax; // Cover the whole screen
+  height: 150vmax;
+  pointer-events: none;
+  z-index: 1; // Behind button
+}
 
 // Success Ripples
-.successRipple1 { @include circle-ring(240px, 0.2); border-color: $color-highlight-green-30; }
-.successRipple2 { @include circle-ring(340px, 0.15); border-color: $color-highlight-green-20; }
-.successRipple3 { @include circle-ring(440px, 0.1); border-color: $color-highlight-green-10; }
+.successRipple1 { 
+  @include oval-ring(240px, 140px, 0.2); 
+  border-color: $color-highlight-green-30; 
+  animation-delay: 0s, 0.8s;
+}
+.successRipple2 { 
+  @include oval-ring(340px, 200px, 0.15); 
+  border-color: $color-highlight-green-20; 
+  animation-delay: 0.1s, 0.9s;
+}
 
 // Countdown Styles
 .countdownContainer {
@@ -184,7 +261,7 @@
   // r=48 -> C = 2 * pi * 48 = 301.59
   stroke-dasharray: 301.59;
   stroke-dashoffset: 301.59;
-  animation: fillCircle 3s linear forwards;
+  animation: fillCircle 1s linear forwards;
 }
 
 @keyframes fillCircle {

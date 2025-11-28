@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import WelcomeView from '@/components/WelcomeView';
 import InstructionsView from '@/components/InstructionsView';
@@ -25,12 +25,79 @@ export default function Home() {
   const [view, setView] = useState<ViewState>('welcome');
   const [isLegalOpen, setIsLegalOpen] = useState(false);
 
+  // Ambient Sound Logic
+  const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    ambientAudioRef.current = new Audio('/sounds/effects/ambiant-sound.mp3');
+    ambientAudioRef.current.loop = true;
+    ambientAudioRef.current.volume = 0;
+    
+    // Try to play immediately (might be blocked)
+    ambientAudioRef.current.play().catch(() => {});
+
+    return () => {
+      if (ambientAudioRef.current) {
+        ambientAudioRef.current.pause();
+        ambientAudioRef.current = null;
+      }
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    };
+  }, []);
+
   // Test Logic Hook (only active when in test mode)
   const currentTestStage = view.startsWith('test-') ? view.replace('test-', '') : 'restaurant';
   const { status: testStatus, isExitingIntro, countdown, config: testConfig, audioRef, startTest, handleHeard } = useTestLogic(
     currentTestStage,
     (next) => handleTestNext(next)
   );
+
+  // Manage Ambient Sound Volume based on state
+  useEffect(() => {
+    const audio = ambientAudioRef.current;
+    if (!audio) return;
+
+    let shouldPlay = true;
+    // Stop during countdown and testing phases
+    if (view.startsWith('test-') && (testStatus === 'countdown' || testStatus === 'testing')) {
+      shouldPlay = false;
+    }
+
+    const targetVolume = shouldPlay ? 0.5 : 0;
+    const duration = 1000;
+
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+
+    // If we want to play and it's paused, play it first
+    if (targetVolume > 0 && audio.paused) {
+      audio.play().catch(() => {});
+    }
+
+    const startVolume = audio.volume;
+    const diff = targetVolume - startVolume;
+    const steps = 20;
+    const stepTime = duration / steps;
+    
+    let currentStep = 0;
+    
+    fadeIntervalRef.current = setInterval(() => {
+      currentStep++;
+      let newVolume = startVolume + (diff * (currentStep / steps));
+      
+      // Clamp
+      newVolume = Math.max(0, Math.min(1, newVolume));
+      audio.volume = newVolume;
+      
+      if (currentStep >= steps) {
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+        if (targetVolume === 0) {
+          audio.pause();
+        }
+      }
+    }, stepTime);
+
+  }, [view, testStatus]);
 
   const handleStart = () => setView('instructions');
   const handleReady = () => setView('test-restaurant');
@@ -123,6 +190,34 @@ export default function Home() {
           countdownValue={circleCountdown}
           backgroundImage={circleBackgroundImage}
         />
+
+        {/* Footer Links (Relative to Circle) */}
+        <div className={styles.relativeFooter}>
+          {(view.startsWith('test-') || view === 'age-selection') && (
+            <button 
+              className={styles.backButton} 
+              onClick={view === 'age-selection' ? handleAgeBack : handleTestBack}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              Back
+            </button>
+          )}
+
+          {view !== 'result' && (
+            <a 
+              href="#" 
+              className={styles.legalLink}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsLegalOpen(true);
+              }}
+            >
+              LEGAL
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Content Views (Buttonless) */}
@@ -150,35 +245,8 @@ export default function Home() {
           />
         )}
         
-        {view === 'result' && <ResultView />}
+        {view === 'result' && <ResultView onLegalClick={() => setIsLegalOpen(true)} />}
       </div>
-
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          {(view.startsWith('test-') || view === 'age-selection') && (
-            <button 
-              className={styles.backButton} 
-              onClick={view === 'age-selection' ? handleAgeBack : handleTestBack}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-              </svg>
-              Back
-            </button>
-          )}
-
-          <a 
-            href="#" 
-            className={styles.legalLink}
-            onClick={(e) => {
-              e.preventDefault();
-              setIsLegalOpen(true);
-            }}
-          >
-            LEGAL
-          </a>
-        </div>
-      </footer>
 
       <LegalModal 
         isOpen={isLegalOpen} 

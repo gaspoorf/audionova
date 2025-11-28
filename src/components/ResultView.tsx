@@ -7,7 +7,11 @@ import Header from '@/components/Header';
 
 gsap.registerPlugin(useGSAP);
 
-export default function ResultView() {
+interface ResultViewProps {
+  onLegalClick: () => void;
+}
+
+export default function ResultView({ onLegalClick }: ResultViewProps) {
   const [score, setScore] = useState<number | null>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
 
@@ -255,6 +259,10 @@ export default function ResultView() {
           </div>
         </div>
       </div>
+
+      <button className={styles.legalButton} onClick={onLegalClick}>
+        LEGAL
+      </button>
     </main>
   );
 }

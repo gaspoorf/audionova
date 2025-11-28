@@ -99,6 +99,26 @@
   display: none; // Replaced by spotlight
 }
 
+.legalButton {
+  background: none;
+  border: none;
+  border-bottom: 1px solid $color-white;
+  color: $color-cream;
+  font-family: var(--font-lausanne);
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 25px;
+  cursor: pointer;
+  margin-top: 40px;
+  padding: 0;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .needleCore {
   display: none; // Replaced by spotlight
 }
