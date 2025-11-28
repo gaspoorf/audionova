@@ -34,6 +34,21 @@
   overflow: hidden;
   border: none;
   
+  // Content Transition
+  & > * {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  &.buttonExiting {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+
+  &.buttonExiting > * {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
   &:disabled {
     cursor: default;
   }
@@ -146,7 +161,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(30deg);
+  transform: translate(-50%, -50%) rotate(45deg);
   width: $width;
   height: $height;
   border-radius: 50%;
@@ -162,21 +177,21 @@
 @keyframes ring-enter {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(30deg) scale(0.6);
+    transform: translate(-50%, -50%) rotate(45deg) scale(0.6);
   }
   100% {
     opacity: var(--target-opacity);
-    transform: translate(-50%, -50%) rotate(30deg) scale(1);
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
 }
 
 @keyframes ring-breathe {
   0%, 100% {
-    transform: translate(-50%, -50%) rotate(30deg) scale(1);
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
     border-radius: 50%;
   }
   50% {
-    transform: translate(-50%, -50%) rotate(32deg) scale(1.03);
+    transform: translate(-50%, -50%) rotate(47deg) scale(1.03);
     border-radius: 51% 49% 52% 48% / 49% 52% 48% 51%;
   }
 }
@@ -184,11 +199,11 @@
 @keyframes ring-exit {
   0% {
     opacity: var(--target-opacity);
-    transform: translate(-50%, -50%) rotate(30deg) scale(1);
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(30deg) scale(0.6);
+    transform: translate(-50%, -50%) rotate(45deg) scale(0.6);
   }
 }
 
@@ -198,7 +213,7 @@
   &.exiting { animation: ring-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 }
 .pulseCircle2 { 
-  @include oval-ring(340px, 200px, 0.2); 
+  @include oval-ring(300px, 180px, 0.2); 
   animation-delay: 0.1s, 0.9s; 
   &.exiting { animation: ring-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 }
@@ -222,7 +237,7 @@
   animation-delay: 0s, 0.8s;
 }
 .successRipple2 { 
-  @include oval-ring(340px, 200px, 0.15); 
+  @include oval-ring(300px, 180px, 0.15); 
   border-color: $color-highlight-green-20; 
   animation-delay: 0.1s, 0.9s;
 }

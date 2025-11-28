@@ -41,7 +41,7 @@ export default function UnifiedCircleButton({
       setTimeout(() => {
         onClick();
         setIsExiting(false);
-      }, 300); // Match CSS duration
+      }, 500); // Match CSS duration
     } else {
       onClick();
     }
@@ -101,8 +101,8 @@ export default function UnifiedCircleButton({
       const haloPoints = 12; // More points for smoother oval shape
       
       // Base Oval Dimensions (Taller than wide, tilted)
-      const baseRadiusX = 280; 
-      const baseRadiusY = 380;
+      const baseRadiusX = 220; 
+      const baseRadiusY = 300;
       const rotation = -20 * (Math.PI / 180); // Same tilt as ripples
 
       // Simulate speech reaction (fast, irregular pulsing)
@@ -242,7 +242,7 @@ export default function UnifiedCircleButton({
       )}
 
       <button 
-        className={`${styles.button} ${styles[variant]}`}
+        className={`${styles.button} ${styles[variant]} ${isExiting ? styles.buttonExiting : ''}`}
         onClick={handleInteraction}
         disabled={disabled || variant === 'countdown' || variant === 'success'}
         style={variant === 'testing' && backgroundImage ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}

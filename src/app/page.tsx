@@ -27,20 +27,40 @@ export default function Home() {
 
   // Ambient Sound Logic
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
+  const ambientContextRef = useRef<AudioContext | null>(null);
+  const ambientGainRef = useRef<GainNode | null>(null);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    ambientAudioRef.current = new Audio('/sounds/effects/ambiant-sound.mp3');
-    ambientAudioRef.current.loop = true;
-    ambientAudioRef.current.volume = 0;
+    const audio = new Audio('/sounds/effects/ambiant-sound.mp3');
+    audio.loop = true;
+    audio.volume = 0;
+    ambientAudioRef.current = audio;
+
+    // Initialize Web Audio API for iOS fading support
+    const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
+    if (AudioContextClass) {
+      const ctx = new AudioContextClass();
+      const gain = ctx.createGain();
+      gain.gain.value = 0;
+      gain.connect(ctx.destination);
+      
+      const source = ctx.createMediaElementSource(audio);
+      source.connect(gain);
+      
+      ambientContextRef.current = ctx;
+      ambientGainRef.current = gain;
+    }
     
     // Try to play immediately (might be blocked)
-    ambientAudioRef.current.play().catch(() => {});
+    audio.play().catch(() => {});
 
     return () => {
-      if (ambientAudioRef.current) {
-        ambientAudioRef.current.pause();
-        ambientAudioRef.current = null;
+      audio.pause();
+      ambientAudioRef.current = null;
+      if (ambientContextRef.current) {
+        ambientContextRef.current.close();
+        ambientContextRef.current = null;
       }
       if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
     };
@@ -58,6 +78,11 @@ export default function Home() {
     const audio = ambientAudioRef.current;
     if (!audio) return;
 
+    // Resume AudioContext on interaction (if suspended)
+    if (ambientContextRef.current?.state === 'suspended') {
+      ambientContextRef.current.resume();
+    }
+
     let shouldPlay = true;
     // Stop during countdown and testing phases
     if (view.startsWith('test-') && (testStatus === 'countdown' || testStatus === 'testing')) {
@@ -74,7 +99,8 @@ export default function Home() {
       audio.play().catch(() => {});
     }
 
-    const startVolume = audio.volume;
+    // Get start volume from GainNode if available, else audio element
+    const startVolume = ambientGainRef.current ? ambientGainRef.current.gain.value : audio.volume;
     const diff = targetVolume - startVolume;
     const steps = 20;
     const stepTime = duration / steps;
@@ -87,6 +113,12 @@ export default function Home() {
       
       // Clamp
       newVolume = Math.max(0, Math.min(1, newVolume));
+      
+      // Apply to GainNode (iOS)
+      if (ambientGainRef.current) {
+        ambientGainRef.current.gain.value = newVolume;
+      }
+      // Apply to Element (Fallback)
       audio.volume = newVolume;
       
       if (currentStep >= steps) {
@@ -99,7 +131,13 @@ export default function Home() {
 
   }, [view, testStatus]);
 
-  const handleStart = () => setView('instructions');
+  const handleStart = () => {
+    // Ensure AudioContext is running
+    if (ambientContextRef.current?.state === 'suspended') {
+      ambientContextRef.current.resume();
+    }
+    setView('instructions');
+  };
   const handleReady = () => setView('test-restaurant');
 
   const handleTestNext = (nextStage: string) => {
