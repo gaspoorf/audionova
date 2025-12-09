@@ -124,6 +124,19 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
     }
   ];
 
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Audionova',
+        text: 'Check your hearing',
+        url: 'https://audionova-v1.vercel.app/',
+      })
+      .catch((error) => console.log('Error sharing', error));
+    } else {
+      alert("Sharing is not supported on this browser.");
+    }
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.fadeIn}>
@@ -179,7 +192,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
               </button>
             )}
             
-            <button className={styles.inviteLink}>
+            <button className={styles.inviteLink} onClick={handleShare}>
                Check your hearing
               <Image 
                 src="/icons/arrow-top-right.svg" 
