@@ -14,43 +14,6 @@ interface ResultViewProps {
 export default function ResultView({ onLegalClick }: ResultViewProps) {
   const [score, setScore] = useState<number | null>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLElement>(null);
-
-  // Scroll Reveal Observer
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      // Sort entries by DOM position to ensure correct stagger order
-      // (IntersectionObserver entries aren't guaranteed to be in DOM order)
-      const sortedEntries = entries.sort((a, b) => {
-        const position = a.target.compareDocumentPosition(b.target);
-        if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
-        if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
-        return 0;
-      });
-
-      let intersectCount = 0;
-      sortedEntries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // Add staggered delay for elements appearing together
-          // Only apply delay if multiple elements appear at once
-          (entry.target as HTMLElement).style.transitionDelay = `${intersectCount * 0.15}s`;
-          entry.target.classList.add(styles.visible);
-          observer.unobserve(entry.target); // Only animate once
-          intersectCount++;
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px' // Trigger slightly before bottom
-    });
-
-    const elements = containerRef.current.querySelectorAll(`.${styles.scrollReveal}`);
-    elements.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [score]); // Re-run when score loads (and content renders)
 
   useEffect(() => {
     const s1 = Number(localStorage.getItem('sound1Score') || 0);
@@ -69,11 +32,11 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
   // Title logic
   const getTitle = () => {
     switch (scoreLevel) {
-      case 1: return <>Your hearing is quite<span>limited</span></>;
+      case 1: return <>Your hearing may be <span>reduced</span></>;
       case 2: return <>You have a <span>below-average</span> hearing sensitivity</>;
-      case 3: return <>Your have an <span>average</span> hearing sensitivity</>;
+      case 3: return <>Your hearing may need a <span>closer check</span></>;
       case 4: return <>You have <span>above-average</span> hearing sensitivity</>;
-      case 5: return <>You have <span>excellent</span> hearing sensitivity</>;
+      case 5: return <>Your hearing looks <span>excellent</span></>;
       default: return <>Error</>;
     }
   };
@@ -162,7 +125,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
   ];
 
   return (
-    <main ref={containerRef} className={styles.container}>
+    <main className={styles.container}>
       <div className={styles.fadeIn}>
         <Header compact />
         <h1 className={styles.title}>{getTitle()}</h1>
@@ -171,12 +134,12 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
 
       <div className={styles.desktopGrid}>
         {/* Column 1: Result & Actions */}
-        <div className={`${styles.card} ${styles.resultCard} ${styles.scrollReveal}`}>
+        <div className={`${styles.card} ${styles.resultCard} ${styles.fadeIn}`} style={{ animationDelay: '0.1s' }}>
           <div className={styles.resultGraph}>
             <div className={styles.gaugeContainer}>
-              <div className={styles.averageLabel}>
+              {/* <div className={styles.averageLabel}>
                 <p>Average</p>
-              </div>
+              </div> */}
               <svg className={styles.gaugeSvg} viewBox="0 0 300 160">
                 {segments.map((seg, i) => {
                   const isActive = i < scoreLevel;
@@ -212,12 +175,12 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
           <div className={styles.resultActions}>
             {scoreLevel <= 3 && (
               <button className={styles.button} onClick={() => window.open('https://www.audionova.com', '_blank')}>
-                Book your appointment
+                Book a free hearing test
               </button>
             )}
             
             <button className={styles.inviteLink}>
-              Invite someone to take the test
+               Check your hearing
               <Image 
                 src="/icons/arrow-top-right.svg" 
                 alt="" 
@@ -230,7 +193,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
 
         {/* Column 2: Recommendation */}
         {scoreLevel < 3 ? (
-          <div className={`${styles.card} ${styles.scrollReveal}`}>
+          <div className={`${styles.card} ${styles.fadeIn}`} style={{ animationDelay: '0.2s' }}>
             <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
             <h2 className={styles.cardTitle}>Phonak Virto™ R Infinio</h2>
             <div className={styles.productImage}>
@@ -256,14 +219,14 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
                 className={styles.ringFront}
               />
             </div>
-            <button className={styles.outlineButton}>Discover the product</button>
+            <a href="https://www.audionova.com/phonak-virto-r-infinio/" className={styles.outlineButton}>Discover the product</a>
           </div>
         ) : (
-          <div className={`${styles.card} ${styles.articleCard} ${styles.scrollReveal}`}>
+          <div className={`${styles.card} ${styles.articleCard} ${styles.fadeIn}`} style={{ animationDelay: '0.2s' }}>
             <div className={styles.articleImageContainer}>
               <Image 
                 src="/img/articles/article-1.webp" 
-                alt="Protect Your Hearing" 
+                alt="Regular hearing tests" 
                 width={320} 
                 height={200} 
                 className={styles.articleImage}
@@ -271,11 +234,12 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
             </div>
             <div className={styles.articleContent}>
               <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
-              <h2 className={styles.cardTitle}>Protect Your Hearing</h2>
+              <h2 className={styles.cardTitle}>Regular hearing tests</h2>
               <p className={styles.articleDescription}>
-                Empower yourself with hearing loss prevention tips from AudioNova to enjoy a life full of sound.
+                Know When to Get Checked
+                Many don't know when to get a hearing test unless they have trouble hearing. Let’s change that.
               </p>
-              <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/blog', '_blank')}>
+              <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/your-hearing-health/when-to-get-checked/', '_blank')}>
                 Read the article
               </button>
             </div>
@@ -283,13 +247,13 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
         )}
 
         {/* Column 3: Contact */}
-        <div className={`${styles.card} ${styles.scrollReveal}`}>
+        <div className={`${styles.card} ${styles.fadeIn}`} style={{ animationDelay: '0.3s' }}>
           <div className={styles.cardLabel}>NEED ASSISTANCE?</div>
-          <h2 className={styles.cardTitle}>Meet our hearing care specialists</h2>
+          <h2 className={styles.cardTitle}>Meet our hearing care experts</h2>
           <div className={styles.contactList}>
             <div className={styles.contactItem}>
               <Image src="/icons/location.svg" alt="" width={24} height={24} />
-              <a href="#">
+              <a href="https://www.audionova.com/clinics/search" target="_blank">
                 Find a center
               </a>
             </div>

@@ -119,17 +119,6 @@
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
-.scrollReveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .legalButton {
   background: none;
   border: none;
@@ -219,7 +208,7 @@
   cursor: pointer;
   padding-bottom: 4px;
   border-bottom: 1px solid $color-white;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 
   svg {
     transform: rotate(-45deg);

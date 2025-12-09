@@ -185,7 +185,7 @@ export default function Home() {
       circleCountdown = countdown;
     } else if (testStatus === 'testing') {
       circleVariant = 'testing';
-      circleLabel = <>I heard<br />the sound</>;
+      circleLabel = <>I hear<br/>the sound</>;
       circleOnClick = handleHeard;
       circleBackgroundImage = `/img/sounds/${currentTestStage}.webp`;
     } else if (testStatus === 'success') {
