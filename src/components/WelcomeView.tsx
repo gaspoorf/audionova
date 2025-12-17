@@ -16,7 +16,7 @@ export default function WelcomeView({ onStart, buttonless }: WelcomeViewProps) {
           Your hearing<br />matters
         </h1>
         <p className={styles.description}>
-          <strong>3 quick steps</strong> to estimate<br />your current hearing level
+          <strong>3 quick steps</strong> to see how your hearing is doing
         </p>
         
         <div className={styles.ctaText}>Check it today</div>

@@ -21,7 +21,10 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
         <div className={styles.section}>
           <div className={styles.scrollableContent}>
             <p className={styles.text}>
-              To enable us to give you the best and most appropriate care and advice, we collect your personal data such as name, address and date of birth; we also collect your more sensitive personal data regarding your health such as your medical and family history for the purposes of ensuring the service we provide is appropriate for you. We also process your personal data for carefully considered and specific purposes which are in our interest and enable us to enhance the services we provide, but which we believe also benefit our customers. This may include creating profiles of our customers in order to promote relevant products and offers which we feel may be of interest to you based on your interactions with Boots. Your personal data will be stored for as long as necessary unless we are required to hold it for longer for legal reasons. We may share your personal information across Boots services (not any of your medical information) and with other companies that provide services on our behalf but we assure you that Boots will never sell your personal data. We are committed to safeguarding your privacy and keeping your personal data safe and secure is our top priority. For more information about who we may share your data with, how Boots process your data and how to amend or remove your data please see our privacy policy at www.boots.com/privacypolicy or find out how to contact us at www.boots.com/customer-services/contact-us
+              The AudioNova website does not collect, process, or store any personal data from its visitors.
+              No contact forms, user accounts, tracking cookies, or analytics tools that could identify users are used on this site. No personal data is shared with third parties or used for commercial purposes.
+              Technical data strictly necessary for the operation and security of the website may be processed automatically by our hosting provider, without being accessed or used by AudioNova.
+              For any questions regarding this Privacy Policy, you may contact us.
             </p>
           </div>
         </div>
@@ -53,17 +56,17 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
             </div>
             <div className={styles.contactItem}>
               <Image src="/icons/email.svg" alt="Email" width={20} height={20} />
-              <a href="mailto:info@bootshearingcare.com">info@bootshearingcare.com</a>
+              <a href="mailto:info@audionova.com">info@audionova.com</a>
             </div>
           </div>
         </div>
 
-        <div className={styles.section}>
+        {/* <div className={styles.section}>
           <h3 className={styles.sectionTitle}>Cookie privacy notice</h3>
           <p className={styles.text}>
             At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

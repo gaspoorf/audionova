@@ -136,6 +136,11 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
                 Book a free hearing test
               </button>
             )}
+            {scoreLevel === 2 && (
+              <button className={styles.button} onClick={() => window.open('https://hearing-screener.beyondhearing.org/aLXvXz/welcome', '_blank')}>
+                Check your hearing
+              </button>
+            )}
             
             <button className={styles.inviteLink} onClick={handleShare}>
                Invite someone to try the test
@@ -192,9 +197,8 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
             </div>
             <div className={styles.articleContent}>
               <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
-              <h2 className={styles.cardTitle}>Regular hearing tests</h2>
+              <h2 className={styles.cardTitle}>Know When to Get Checked</h2>
               <p className={styles.articleDescription}>
-                Know When to Get Checked
                 Many don't know when to get a hearing test unless they have trouble hearing. Let’s change that.
               </p>
               <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/your-hearing-health/when-to-get-checked/', '_blank')}>
@@ -214,13 +218,13 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
               />
             </div>
             <div className={styles.articleContent}>
-              <div className={styles.cardLabel}>RECOMMENDED FOR YOU</div>
-              <h2 className={styles.cardTitle}>Is sleeping with earplugs harmful to hearing</h2>
+              <div className={styles.cardLabel}>How to Improve Hearing</div>
+              <h2 className={styles.cardTitle}>10 Steps to Hear Better</h2>
               {/* <p className={styles.articleDescription}>
                 Know When to Get Checked
                 Many don't know when to get a hearing test unless they have trouble hearing. Let’s change that.
               </p> */}
-              <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/your-hearing-health/when-to-get-checked/', '_blank')}>
+              <button className={styles.outlineButton} onClick={() => window.open('https://www.audionova.com/your-hearing-health/protect-your-hearing/', '_blank')}>
                 Read the article
               </button>
             </div>
@@ -246,8 +250,8 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
             </div>
             <div className={styles.contactItem}>
               <Image src="/icons/email.svg" alt="" width={24} height={24} />
-              <a href="mailto:crc@auditionsante.fr">
-                crc@auditionsante.fr
+              <a href="mailto:info@audionova.com">
+                info@audionova.com
               </a>
             </div>
           </div>
