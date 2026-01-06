@@ -16,57 +16,68 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
           Close ✕
         </button>
 
-        <h2 className={styles.title}>Privacy notice</h2>
+        <h2 className={styles.title}>LEGAL</h2>
 
+        {/* #1 Test Results Disclaimer */}
         <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Test Results Disclaimer</h3>
+          <div className={styles.scrollableContent}>
+            <p className={styles.text}>
+              This hearing test provides indicative results only and is not a medical diagnosis.
+              For a comprehensive hearing evaluation, please consult a hearing care professional
+              at your nearest AudioNova center.
+            </p>
+          </div>
+        </div>
+
+        {/* #2 Environmental Disclaimer */}
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Environmental Disclaimer</h3>
+          <div className={styles.scrollableContent}>
+            <p className={styles.text}>
+              For accurate results, please take this test in a quiet environment using headphones.
+              Background noise (street, public transport, etc.) may affect your results.
+            </p>
+          </div>
+        </div>
+
+        {/* #3 Privacy Notice */}
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Privacy Notice</h3>
           <div className={styles.scrollableContent}>
             <p className={styles.text}>
               The AudioNova website does not collect, process, or store any personal data from its visitors.
-              No contact forms, user accounts, tracking cookies, or analytics tools that could identify users are used on this site. No personal data is shared with third parties or used for commercial purposes.
-              Technical data strictly necessary for the operation and security of the website may be processed automatically by our hosting provider, without being accessed or used by AudioNova.
+              No contact forms, user accounts, tracking cookies, or analytics tools that could identify users
+              are used on this site. No personal data is shared with third parties or used for commercial purposes.
+              Technical data strictly necessary for the operation and security of the website may be processed
+              automatically by our hosting provider, without being accessed or used by AudioNova.
               For any questions regarding this Privacy Policy, you may contact us.
             </p>
           </div>
         </div>
 
-        <div className={styles.section}>
-          <div className={styles.scrollableContent}>
-            <p className={styles.text}>
-              <strong>Environment Disclaimer:</strong> "For accurate results, please take this test in a quiet environment using headphones. Background noise (street, public transport, etc.) may affect your results."
-            </p>
-            </div>
-        </div>
-
-        
-
+        {/* Contact placeholders */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>Contact</h3>
           <div className={styles.contactList}>
             <div className={styles.contactItem}>
               <Image src="/icons/location.svg" alt="Location" width={20} height={20} />
               <span>
-                Boots Hearingcare Ltd<br />
-                18 Trinity Square, Llandudno,<br />
-                LL30 2RH.
+                AudioNova<br />
+                [Local address]<br />
+                [City, Postal Code, Country]
               </span>
             </div>
             <div className={styles.contactItem}>
               <Image src="/icons/call.svg" alt="Phone" width={20} height={20} />
-              <a href="tel:03452701600">0345 270 1600</a>
+              <span>[Local phone number]</span>
             </div>
             <div className={styles.contactItem}>
               <Image src="/icons/email.svg" alt="Email" width={20} height={20} />
-              <a href="mailto:info@audionova.com">info@audionova.com</a>
+              <span>[local-market@email.com]</span>
             </div>
           </div>
         </div>
-
-        {/* <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Cookie privacy notice</h3>
-          <p className={styles.text}>
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-          </p>
-        </div> */}
       </div>
     </div>
   );
