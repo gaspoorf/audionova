@@ -80,10 +80,17 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
   ];
 
   const handleShare = () => {
+    const shareMessages = [
+      "Check what you hear. Explore your hearing with AudioNova.",
+      "Can you hear it? Explore your hearing with AudioNova.",
+      "Got 30 seconds? Explore your hearing with AudioNova."
+    ];
+    const randomMessage = shareMessages[Math.floor(Math.random() * shareMessages.length)];
+
     if (navigator.share) {
       navigator.share({
         title: 'Audionova',
-        text: 'Check your hearing',
+        text: randomMessage,
         url: 'https://audionova-v1.vercel.app/',
       })
       .catch((error) => console.log('Error sharing', error));
