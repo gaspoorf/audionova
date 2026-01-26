@@ -25,7 +25,7 @@ export default function WelcomeView({ onStart, buttonless }: WelcomeViewProps) {
       {!buttonless && (
         <div className={styles.buttonWrapper}>
           <button className={styles.button} onClick={onStart}>
-            Start<br />the test
+            Start
           </button>
         </div>
       )}

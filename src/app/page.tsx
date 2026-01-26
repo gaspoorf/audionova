@@ -169,7 +169,7 @@ export default function Home() {
 
   if (view === 'welcome') {
     circleVariant = 'default';
-    circleLabel = <>Start<br />the test</>;
+    circleLabel = <>Start</>;
     circleOnClick = handleStart;
   } else if (view === 'instructions') {
     circleVariant = 'default';
@@ -178,7 +178,7 @@ export default function Home() {
   } else if (view.startsWith('test-')) {
     if (testStatus === 'intro') {
       circleVariant = 'default';
-      circleLabel = <>Start<br />the test</>;
+      circleLabel = <>Start</>;
       circleOnClick = startTest;
     } else if (testStatus === 'countdown') {
       circleVariant = 'countdown';

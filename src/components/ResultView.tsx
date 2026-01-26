@@ -34,7 +34,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
     switch (scoreLevel) {
       case 1: return <>Your hearing may be <span>reduced</span></>;
       case 2: return <>Your hearing may need a <span>closer check</span></>;
-      case 3: return <>Your hearing looks <span>excellent</span></>;
+      case 3: return <>Your hearing seems <span>excellent</span></>;
       default: return <>Error</>;
     }
   };
@@ -150,7 +150,7 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
             )}
             
             <button className={styles.inviteLink} onClick={handleShare}>
-               Invite someone to try the test
+               Invite someone to try it out
               <Image 
                 src="/icons/arrow-top-right.svg" 
                 alt="" 
@@ -225,8 +225,8 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
               />
             </div>
             <div className={styles.articleContent}>
-              <div className={styles.cardLabel}>How to Improve Hearing</div>
-              <h2 className={styles.cardTitle}>10 Steps to Hear Better</h2>
+              <div className={styles.cardLabel}>HOW TO PROTECT YOUR HEARING</div>
+              <h2 className={styles.cardTitle}>Steps to Prevent Hearing Loss</h2>
               {/* <p className={styles.articleDescription}>
                 Know When to Get Checked
                 Many don't know when to get a hearing test unless they have trouble hearing. Let’s change that.

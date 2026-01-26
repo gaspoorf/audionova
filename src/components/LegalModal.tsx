@@ -20,10 +20,10 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
 
         {/* #1 Test Results Disclaimer */}
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Test Results Disclaimer</h3>
+          <h3 className={styles.sectionTitle}>Results Disclaimer</h3>
           <div className={styles.scrollableContent}>
             <p className={styles.text}>
-              This hearing test provides indicative results only and is not a medical diagnosis.
+              The information provided gives indicative results only and is not a medical diagnosis.
               For a comprehensive hearing evaluation, please consult a hearing care professional
               at your nearest AudioNova center.
             </p>
@@ -35,7 +35,7 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
           <h3 className={styles.sectionTitle}>Environmental Disclaimer</h3>
           <div className={styles.scrollableContent}>
             <p className={styles.text}>
-              For accurate results, please take this test in a quiet environment using headphones.
+              For accurate results, please perform this in a quiet environment using headphones.
               Background noise (street, public transport, etc.) may affect your results.
             </p>
           </div>
