@@ -46,12 +46,8 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
           <h3 className={styles.sectionTitle}>Privacy Notice</h3>
           <div className={styles.scrollableContent}>
             <p className={styles.text}>
-              The AudioNova website does not collect, process, or store any personal data from its visitors.
-              No contact forms, user accounts, tracking cookies, or analytics tools that could identify users
-              are used on this site. No personal data is shared with third parties or used for commercial purposes.
-              Technical data strictly necessary for the operation and security of the website may be processed
-              automatically by our hosting provider, without being accessed or used by AudioNova.
-              For any questions regarding this Privacy Policy, you may contact us.
+              The AudioNova Hearing Test does not collect, process, or store any personally identifiable information from visitors. Tracking cookies and analytics tools used on the Hearing Test itself collect minimal information, and AudioNova does not sell or share this data for cross-context behavioral advertising. Personal information processed by the Hearing Test does not constitute Protected Health Information, as that term is defined under HIPAA. For more information about your rights and how AudioNova manages your personal information, please refer to our
+              <a className={styles.legalLink} href="https://www.audionova.com/rights-and-policies/">Rights & Policies</a>.
             </p>
           </div>
         </div>

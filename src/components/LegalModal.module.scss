@@ -83,6 +83,11 @@
   opacity: 0.9;
 }
 
+.text a {
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
 .scrollableContent {
   padding-right: 10px;
   
@@ -129,3 +134,4 @@
     }
   }
 }
+
