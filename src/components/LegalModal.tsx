@@ -47,7 +47,7 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
           <div className={styles.scrollableContent}>
             <p className={styles.text}>
               The AudioNova Hearing Check does not collect, process, or store any personally identifiable information from visitors. Tracking cookies and analytics tools used on the Hearing Check itself collect minimal information, and AudioNova does not sell or share this data for cross-context behavioral advertising. Personal information processed by the Hearing Check does not constitute Protected Health Information, as that term is defined under HIPAA. For more information about your rights and how AudioNova manages your personal information, please refer to our
-              <a className={styles.legalLink} href="https://www.audionova.com/rights-and-policies/">Rights & Policies</a>
+              <a className={styles.legalLink} href="https://www.audionova.com/rights-and-policies/" target="_blank">Rights & Policies</a>
             </p>
           </div>
         </div>
@@ -60,12 +60,12 @@ export default function LegalModal({ isOpen, onClose }: LegalModalProps) {
               <Image src="/icons/location.svg" alt="Location" width={20} height={20} />
               <span>
                 AudioNova<br />
-                <a href="https://www.audionova.com/centers/search/">Find a center</a><br />
+                <a href="https://www.audionova.com/centers/search/" target="_blank">Find a center</a><br />
               </span>
             </div>
             <div className={styles.contactItem}>
               <Image src="/icons/call.svg" alt="Phone" width={20} height={20} />
-              <span><a href="tel:888-845-7931">888-845-7931</a></span>
+              <span><a href="tel:888-845-7931" target="_blank">888-845-7931</a></span>
             </div>
             {/* <div className={styles.contactItem}>
               <Image src="/icons/email.svg" alt="Email" width={20} height={20} />
