@@ -245,22 +245,18 @@ export default function ResultView({ onLegalClick }: ResultViewProps) {
           <div className={styles.contactList}>
             <div className={styles.contactItem}>
               <Image src="/icons/location.svg" alt="" width={24} height={24} />
-              <a href="https://www.audionova.com/clinics/search" target="_blank">
-                Find a center
-              </a>
+              <a href="https://www.audionova.com/centers/search/" target="_blank">Find a center</a>
             </div>
             <div className={styles.contactItem}>
               <Image src="/icons/call.svg" alt="" width={24} height={24} />
-              <a href="tel:0801907966">
-                0 801 907 966
-              </a>
+              <span><a href="tel:888-845-7931" target="_blank">888-845-7931</a></span>
             </div>
-            <div className={styles.contactItem}>
+            {/* <div className={styles.contactItem}>
               <Image src="/icons/email.svg" alt="" width={24} height={24} />
               <a href="mailto:info@audionova.com">
                 info@audionova.com
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
